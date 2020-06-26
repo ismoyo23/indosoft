@@ -1,0 +1,60 @@
+.NavBar{
+    margin-left: 34px;
+    width: 98%;
+    background-color:#141414;
+    height: 57px;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;
+}
+ 
+.NavLink{
+    color: white !important;
+    font-size: 20px;
+
+}
+
+.logo{
+    width: 33px;
+    height: 33px;
+    margin-left: -6px;
+    border-radius: 50%;
+    border: 1px solid aqua;
+}
+
+.username{
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.users{
+    visibility: hidden;
+}
+
+@media only screen and (max-width: 700px) {
+    .NavBar{
+        margin-left: 2px;
+        width: 100%;
+        background-color:black;
+        height: 57px;
+        -webkit-box-shadow: 0 8px 6px -6px black;
+           -moz-box-shadow: 0 8px 6px -6px black;
+                box-shadow: 0 8px 6px -6px black;
+    }
+
+    .NavLink{
+        color: white !important;
+        font-size: 20px;
+        
+    }
+
+    .dropdown{
+        color: white;
+        
+    }
+
+    .users{
+        background-color: white;
+        visibility: show;
+    }
+}

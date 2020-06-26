@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&family=Raleway:ital,wght@1,100&display=swap');
+.NavKu{
+    background-color:black;
+    width: 50px;
+    position: fixed;
+} 
+
+.NavLink{
+    height: 100%;
+    line-height: 35px;
+    font-size: 17px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    transition: .4s;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.NavLink:hover{
+   background-color: aqua;
+   color: white;
+}
+
+.NavLink i {
+    margin-right: 16px;
+}
+
+.sidebar{
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    background: #141414;
+    box-shadow: 5px 0 5px -5px #333;
+    box-sizing: border-box;
+}
+
+.sidebar header{
+    font-size: 21px;
+    color: white;
+    text-align: center;
+    line-height: 55px;
+    background: #007acc;
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.ImgHeader{
+    margin-top: 20px;
+    border-radius: 20%;
+    width:100px;
+    height: 100px;
+    margin-left: 74px;
+    border: 2px solid white;
+}
+
+.sideBarBtn{
+    z-index: 1;
+    position: fixed;
+    margin-left: 18px;
+    cursor: pointer;
+    transition: 0.5;
+    transition-property: color;
+}
+
+.sideBarBtn:hover{
+    color: aqua;
+}
+
+.username{
+    margin-top: 14px;
+    text-align: center;
+    color: white;
+    font-size: 23px;
+}
+
+.sidebar .imgBar{
+    height: 200px;
+    background: black;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.position{
+    text-align: center;
+    color: white;
+    margin-top: -20px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+
+}
+
+.check{
+    margin-left: 300px;
+}
+
+@media only screen and (max-width: 600px) {
+    .sidebar{
+        position: fixed;
+        width: 75px;
+        height: 100%;
+        background: black;
+        box-shadow: 5px 0 5px -5px #333;
+        box-sizing: border-box;
+    }
+
+    .ImgHeader{
+        display: none;
+    }
+    .username{
+       display: none;
+    }
+
+    .sidebar header{
+     display: none;
+    }
+
+    .NavLink{
+        margin-left: -14px;
+        width: 90px;
+        height: 100%;
+        line-height: 35px;
+        font-size: 19px;
+        color: white;
+        transition: .4s;
+        border-top: 1px solid rgb(26, 25, 25);
+        border-bottom: 1px solid rgb(26, 25, 25);
+    }
+
+    .NavKu{
+        background-color:black;
+        width: 12px;
+        position: fixed;
+    } 
+
+    .title{
+        display: none;
+    }
+
+    .sidebar .imgBar{
+        display: none;
+    }
+  }
