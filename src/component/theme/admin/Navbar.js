@@ -4,10 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import logo from '../../../image/booksIcon.jpg'
 import style from '../../../styles/Admin/Navbar.module.css'
-function NavbarMenu(){
+import $ from 'jquery'
+function NavbarMenu(props){
         const [isOpen, setIsOpen] = useState(false);
         const toggle = () => setIsOpen(!isOpen);
-
 
         return(
             <>
@@ -17,7 +17,7 @@ function NavbarMenu(){
                 <Collapse navbar>
                 <Nav className="mr-auto" navbar>
                 <NavItem>
-                        <NavLink className={style.NavLink} href="#"><lable for="checkidku" className={style.sideBarBtn}><i  class="fa fa-bars"  aria-hidden="true"></i>
+                        <NavLink onClick={props.event} className={style.NavLink} href="#"><lable for="checkidku" className={style.sideBarBtn}><i  class="fa fa-bars"  aria-hidden="true"></i>
                     </lable></NavLink>
                     </NavItem>
                 </Nav>

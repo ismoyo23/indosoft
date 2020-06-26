@@ -4,13 +4,7 @@ import { Card, CardBody, Button, CardTitle, CardText, CardImg, Nav, NavItem ,Dro
 import 'font-awesome/css/font-awesome.min.css';
 import style from '../../../styles/Admin/Sidebar.module.css'
 import img from '../../../image/image.jpg'
-import $ from 'jquery'
 class Header extends Component{
-
-    HandleClick = () => {
-        $('#sidebar').addClass(style.check)
-    } 
-
 
     render(){
         
@@ -18,7 +12,7 @@ class Header extends Component{
             <>
                  {/* side bar */}  
             {/* <Col md='2' xs="1"> */}
-                <Nav vertical id='sidebar' className={style.sidebar}>
+                <Nav vertical id='sidebar' >
                     <header>
                         Library App
                     </header>

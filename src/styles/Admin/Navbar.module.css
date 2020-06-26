@@ -1,6 +1,6 @@
 .NavBar{
     margin-left: 34px;
-    width: 98%;
+    width: 100%;
     background-color:#141414;
     height: 57px;
     -webkit-box-shadow: 0 8px 6px -6px black;
@@ -11,6 +11,9 @@
 .NavLink{
     color: white !important;
     font-size: 20px;
+    cursor: pointer;
+    transition: 0.5;
+    transition-property: color;
 
 }
 
@@ -33,8 +36,8 @@
 
 @media only screen and (max-width: 700px) {
     .NavBar{
-        margin-left: 2px;
-        width: 100%;
+        margin-left: -140px;
+        width: 210px;
         background-color:black;
         height: 57px;
         -webkit-box-shadow: 0 8px 6px -6px black;
