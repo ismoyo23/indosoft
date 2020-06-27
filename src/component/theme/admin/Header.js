@@ -4,10 +4,18 @@ import { Card, CardBody, Button, CardTitle, CardText, CardImg, Nav, NavItem ,Dro
 import 'font-awesome/css/font-awesome.min.css';
 import style from '../../../styles/Admin/Sidebar.module.css'
 import img from '../../../image/image.jpg'
+import $ from 'jquery'
+import {Link} from 'react-router-dom';
 class Header extends Component{
-
     render(){
-        
+        let handleDropdown = () => {
+            $('.Dropdown').addClass(style.DropShow)
+        }
+
+        let handleDropdownSettings = () => {
+            $('.Dropdown').removeClass(style.DropShow)
+
+        }
         return(
             <>
                  {/* side bar */}  
@@ -23,17 +31,24 @@ class Header extends Component{
                     </div> 
                     
                     <NavItem>
-                        <NavLink className={style.NavLink} href="#"><i className="fa fa-home"></i><span className={style.title}>Dashboard</span></NavLink>
+                        <NavLink onClick={handleDropdownSettings} className={style.NavLink} href="#"><Link to='/Admin'><i className="fa fa-home"></i><span className={style.title}>Dashboard</span></Link></NavLink>
+                        
                     </NavItem>
 
                     <NavItem>
-                        <NavLink className={style.NavLink} href="#"><i className="fa fa-cog" aria-hidden="true"></i><span className={style.title}>Settings</span>
+                        <NavLink onClick={handleDropdown} className={style.NavLink} href="#"><i className="fa fa-cog" aria-hidden="true"></i><span className={style.title}>Content</span>
                     </NavLink>
-                    
+                    <div className={`${style.Dropdown} Dropdown`}>
+                        
+                        <NavLink  href="#"><Link to='/books'><span className={style.titleDropdown}>Books</span></Link></NavLink>
+                        
+                        <NavLink  href="#"><Link to='/author'><span className={style.titleDropdown}>Author</span></Link></NavLink>
+                        <NavLink  href="#"><Link to='/genre'><span className={style.titleDropdown}>Genre</span></Link></NavLink>
+                        </div>
                     </NavItem>
 
                     <NavItem>
-                        <NavLink className={style.NavLink} href="#"><i className="fa fa-tasks" aria-hidden="true"></i><span className={style.title}>History</span>
+                        <NavLink onClick={handleDropdownSettings} className={style.NavLink} href="#"><i className="fa fa-tasks" aria-hidden="true"></i><span className={style.title}>History</span>
                     </NavLink>
                     </NavItem>
                 </Nav>

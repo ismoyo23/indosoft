@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=Great+Vibes&family=Spectral:ital,wght@1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Frank+Ruhl+Libre&family=Great+Vibes&family=Spectral:ital,wght@1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Frank+Ruhl+Libre&family=Galada&family=Great+Vibes&family=Spectral:ital,wght@1,500&display=swap');
+.NavBar{
+   height: 54px;
+   background-color: rgb(40, 57, 131);
+}
+
+.NavLink{
+    color: wheat;
+    font-family: 'Frank Ruhl Libre', serif;
+    font-family: 'Great Vibes', cursive;
+    font-family: 'Spectral', serif;
+    color: white !important;
+}
+
+.NavBrand{
+    color: white !important;
+    font-family: 'Great Vibes', cursive;
+    font-size: 30px;
+    
+}
+
+
+
+.LogoImg{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.TitleLib{
+    font-size: 20px;
+    font-family: 'Bangers', cursive;
+
+    font-family: 'Frank Ruhl Libre', serif;
+
+    font-family: 'Great Vibes', cursive;
+
+    font-family: 'Spectral', serif;
+}
+
+.FontTitle{
+    font-family: 'Bangers', cursive;
+
+    font-family: 'Frank Ruhl Libre', serif;
+
+    font-family: 'Galada', cursive;
+
+    font-family: 'Great Vibes', cursive;
+
+    font-family: 'Spectral', serif;
+    font-size: 30px;
+}

@@ -5,8 +5,7 @@ import {Input,Table, Container, Row,Col, Card, Button, CardImg, CardTitle, CardT
     CardSubtitle, CardBody, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, FormText } from 'reactstrap';
 import style from '../../../styles/Admin/Body.module.css'
 
-function Home(props){
-
+function AuthorCrud(props){
     const {
         buttonLabel,
         className
@@ -15,10 +14,8 @@ function Home(props){
       const [modal, setModal] = useState(false);
     
       const toggle = () => setModal(!modal);
-
-        return(
-            <>
-
+    return(
+        <>
             {/* modal */}
             <Modal isOpen={modal} toggle={toggle} className={className}>
                 <form>
@@ -69,32 +66,12 @@ function Home(props){
 
             {/* card */}
     
-                <Row style={{marginTop: '30px'}} noGutters>
-                <Col md="3" xs='10' className={style.Card}>
-                    <Card body>
-                        <i className="fa fa-user" aria-hidden="true"><span className={style.writer}>Users</span></i>
-                        <p className={style.writer}>120</p>
-                    </Card>
-                </Col>
-                <Col md="3" xs='10' className={style.Card}>
-                    <Card body>
-                        <i class="fa fa-bookmark" aria-hidden="true"><span className={style.writer}>Borrowed</span></i>
-                        <p className={style.writer}>120</p>
-                    </Card>
-                </Col>
-
-                <Col md="3" xs='10' className={style.Card}>
-                    <Card body>
-                        <i  class="fa fa-commenting" aria-hidden="true"><span className={style.writer}>Message</span></i>
-                        <p className={style.writer}>120</p>
-                    </Card>
-                </Col>
-
+                <Row noGutters>
                 <Col md='12' xs='12'>
                 <Card body className={style.CardTable}>
                 <Row>
                  <Col md='6'>
-                    <Button  onClick={toggle} color="primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Books
+                    <Button  onClick={toggle} color="primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Author
                     </Button>
                 </Col>
 
@@ -241,11 +218,8 @@ function Home(props){
                 </Col> 
                 
                 </Row>
-            
-                
-            </>
-        )
-    }
+        </>
+    )
+}
 
-
-export default Home
+export default AuthorCrud

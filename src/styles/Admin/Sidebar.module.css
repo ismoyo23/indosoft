@@ -34,6 +34,7 @@
     box-shadow: 5px 0 5px -5px #333;
     box-sizing: border-box;
     width: 250px;
+    transition: all .9s;
 }
 
 .sidebar header{
@@ -165,3 +166,33 @@
      margin-left: -34px;
      transition: all .9s;
  }
+
+ .navbar13{
+    transition: all .9s;
+}
+
+.Dropdown{
+    height: 100%;
+    font-size: 17px;
+    color: white;
+    padding-left: 10px;
+    transition: .4s;
+    margin-left: 70px;
+    display: none;
+
+}
+
+.DropShow{
+    height: 100%;
+    font-size: 17px;
+    color: white;
+    transition: .9s;
+    padding-left: 10px;
+    margin-left: 40px;
+    display: block;
+}
+
+.Dropdown .titleDropdown{
+    margin-left: 10px;
+    color: white;
+}
