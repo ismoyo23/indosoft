@@ -3,6 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=Great+Vibes&family=Spectral:ital,wght@1,500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Frank+Ruhl+Libre&family=Great+Vibes&family=Spectral:ital,wght@1,500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Frank+Ruhl+Libre&family=Galada&family=Great+Vibes&family=Spectral:ital,wght@1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crete+Round:ital@0;1&display=swap');
 .NavBar{
    height: 54px;
    background-color: rgb(40, 57, 131);
@@ -22,8 +24,6 @@
     font-size: 30px;
     
 }
-
-
 
 .LogoImg{
     width: 20px;
@@ -54,3 +54,47 @@
     font-family: 'Spectral', serif;
     font-size: 30px;
 }
+
+.IconBooks{
+    margin-top: 40px;
+    text-align: center;
+}
+
+.NavItem{
+    font-family: 'Roboto Slab', serif;
+}
+
+
+.SwiperWraper{
+    text-align: center;
+      font-size: 18px;
+      background: #fff;
+
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+}
+
+.headerBooks{
+    font-size: 32px;
+    font-family: 'Bebas Neue', cursive;
+    font-family: 'Crete Round', serif;
+    margin-top: 14px;
+    margin-bottom: 9px;
+}
+
+.imgCard{
+    margin-left: 8px;
+    margin-top: 10px;
+}
+

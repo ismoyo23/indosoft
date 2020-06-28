@@ -5,6 +5,12 @@ import img from '../../../image/slide1.jpg'
 import img2 from '../../../image/slide2.jpg'
 import img3 from '../../../image/slide3.png'
 import img4 from '../../../image/slide4.png'
+import iconbuku from '../../../image/icon_buku1.png'
+import iconbuku2 from '../../../image/icon_buku2.png'
+import iconbuku3 from '../../../image/icon_buku3.png'
+import iconbuku4 from '../../../image/icon_buku4.png'
+import iconbuku5 from '../../../image/icon_buku5.png'
+import img6 from '../../../image/image.jpg'
 import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
 import {
@@ -40,6 +46,16 @@ function NavbarPage(){
       },
       pagination: {
         el: '.swiper-pagination',
+      },
+      }
+
+      let bookSlide = {
+        slidesPerView: 5,
+      spaceBetween: 30,
+      freeMode: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
       },
       }
 
@@ -97,15 +113,9 @@ function NavbarPage(){
           </Nav>
           <NavbarText>
           <Nav className="mr-auto" navbar>
-            <NavItem>
-              <NavLink href="/components/">Components</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-            </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Options
+                <span className={style.NavItem}>Category</span>
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
@@ -120,29 +130,149 @@ function NavbarPage(){
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
-          </Nav>
+
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                <span className={style.NavItem}>All Time</span>
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>
+                  Option 1
+                </DropdownItem>
+                <DropdownItem>
+                  Option 2
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  Reset
+                </DropdownItem>
+              </DropdownMenu>
+              
+            </UncontrolledDropdown>
+
+            </Nav>
+
           </NavbarText>
         </Collapse>
         </Container>
       </Navbar>
 
+  <Container>
       <Swiper {...params}>
-      <div class="swiper-slide">
-          <img src={img}/>
-      </div>
-      <div class="swiper-slide">
-          <img src={img2}/>
-      </div>
+
       <div class="swiper-slide">
           <img src={img3}/>
       </div>
       <div class="swiper-slide">
           <img src={img4}/>
       </div>
-
-      <div class="swiper-pagination"></div>
       
     </Swiper>
+
+    <Row className={style.IconBooks}>
+        <Col md='3' xs='6'>
+            <img src={iconbuku} />
+        </Col>
+
+    <Col md='3' xs='6'>
+            <img src={iconbuku2} />
+     </Col>
+     <Col md='3' xs='6'>
+            <img src={iconbuku3} />
+     </Col>
+
+
+     <Col md='3' xs='6'>
+            <img src={iconbuku5}/>
+     </Col>
+     
+    </Row>
+
+      
+      {/* slide books */}
+    <header className={style.headerBooks}>New Books</header>
+
+    <Swiper {...bookSlide}>
+
+      <div class="swiper-slide" className={style.SwiperSlide}>
+        <div className={style.SwiperWraper}>
+          <img style={{width: '300px'}} src={img6}/>
+        </div>
+      </div>
+      <div class="swiper-slide" className={style.SwiperSlide}>
+
+      <div className={style.SwiperWraper}>
+          <img style={{width: '300px'}} src={img6}/>
+      </div>
+      </div>
+
+      <div class="swiper-slide" className={style.SwiperSlide}>
+
+      <div className={style.SwiperWraper}>
+          <img style={{width: '300px'}}  src={img6}/>
+      </div>
+      </div>
+
+      <div class="swiper-slide" className={style.SwiperSlide}>
+
+      <div className={style.SwiperWraper}>
+          <img style={{width: '300px'}}  src={img6}/>
+      </div>
+      </div>
+
+      <div class="swiper-slide" className={style.SwiperSlide}>
+
+      <div className={style.SwiperWraper}>
+          <img style={{width: '300px'}}  src={img6}/>
+      </div>
+      </div>
+      
+
+      <div class="swiper-slide" className={style.SwiperSlide}>
+
+      <div className={style.SwiperWraper}>
+          <img style={{width: '300px'}}  src={img6}/>
+      </div>
+      </div>
+
+      <div class="swiper-slide" className={style.SwiperSlide}>
+
+      <div className={style.SwiperWraper}>
+          <img style={{width: '300px'}}  src={img6}/>
+      </div>
+      </div>
+      
+    </Swiper>
+
+
+
+    {/* list books */}
+
+    <header className={style.headerBooks}>List Books</header>
+    <Row>
+      
+
+     <Col md='2' xs='6'>
+        <Card className={style.cardBody}>
+            <img className={style.imgCard} src={img6} alt="Card image cap" />
+        </Card>
+     </Col>
+
+     <Col md='2' xs='6'>
+        <Card>
+            <img className={style.imgCard} src={img6} alt="Card image cap" />
+        </Card>
+     </Col>
+
+     <Col md='2' xs='6'>
+        <Card>
+            <img className={style.imgCard} src={img6} alt="Card image cap" />
+        </Card>
+     </Col>
+    </Row>
+    </Container>
+
+    
         </>
     )
 }
