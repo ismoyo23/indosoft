@@ -6,22 +6,9 @@ import { Link, useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
 
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
     NavItem,
     NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText,
-    Container,
     Card, Button, Row, Col, Input,
-     CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle,
     
     Modal, ModalHeader, ModalBody, ModalFooter,
 
@@ -70,9 +57,11 @@ function UserBeforeLogin(props){
                 confirmButtonText: 'Ok'
               }).then((result) => {
                 if (result.value) {
+                  console.log(result)
                   localStorage.setItem('token', response.data.data[0].AccessToken)
                   localStorage.setItem('name_user', response.data.data[0].name_user)
-                  history.push('/')
+                  localStorage.setItem('id', response.data.data[0].id_user)
+                  window.location.reload()
                 }
               })
               

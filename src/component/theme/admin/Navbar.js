@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import logo from '../../../image/booksIcon.jpg'
 import style from '../../../styles/Admin/Navbar.module.css'
-import $ from 'jquery'
 function NavbarMenu(props){
         const [isOpen, setIsOpen] = useState(false);
         const toggle = () => setIsOpen(!isOpen);

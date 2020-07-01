@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import BorrowerUser from './page/User/BorrowerBooks'
 import Users from './page/User/HomePage'
 import Admin from './page/Admin/Dashboard'
 import CrudBooks from './page/Admin/BooksCrud'
@@ -13,7 +14,8 @@ function App() {
     <div style={{margin: '0', padding: '0'}}>
     <Router>
       <Switch>
-      <Route path='/DetailBooks' component={DetailBooks}/>
+      <Route path='/borowerbooks' component={BorrowerUser}/>
+      <Route path='/DetailBooks/:id' component={DetailBooks}/>
         {/* Route User */}
         <Route path='/' exact component={Users}/>
 

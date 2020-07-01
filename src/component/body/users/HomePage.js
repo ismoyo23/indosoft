@@ -3,6 +3,7 @@ import style from '../../../styles/Users/Navbar.module.css'
 import 'font-awesome/css/font-awesome.min.css';
 import img6 from '../../../image/image.jpg'
 import 'swiper/css/swiper.css';
+import {Link} from 'react-router-dom';
 import {
   Card, Button, Row, Col, Input,
    CardImg, CardText, CardBody,
@@ -49,8 +50,8 @@ console.log(props)
           <Card className={style.text} style={{height: '270px', width: '100%'}}>
               <CardBody >
               <CardTitle>{props.allBooks.title}</CardTitle>
-                <CardText>{props.allBooks.discription}</CardText>
-                <Button color="info">Detail</Button>
+                <CardText>{props.allBooks.discription.substr(0, 70)}</CardText>
+                <Link to={`/detailbooks/${props.allBooks.id}`}><Button color="info">Detail</Button></Link>
               </CardBody>
           </Card>
           </div>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import style from '../../../styles/Users/Navbar.module.css'
 import 'font-awesome/css/font-awesome.min.css';
-import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
 import UserBeforeLogin from './DropdownUsers'
+import {Link} from 'react-router-dom'
 import {
   Collapse,
   Navbar,
@@ -63,7 +63,11 @@ function NavbarPage(){
             
           </Nav>
           <NavbarText>
+            
           <Nav className="mr-auto" navbar>
+          <NavItem>
+              <Link to="/"><NavLink className={style.NavItem}>Home</NavLink></Link>
+            </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 <span className={style.NavItem}>Category</span>
@@ -101,6 +105,9 @@ function NavbarPage(){
               
             </UncontrolledDropdown>
 
+            <NavItem>
+              <Link to="/borowerbooks"><NavLink className={style.NavItem}>Books Borrowed</NavLink></Link>
+            </NavItem>
             </Nav>
 
           </NavbarText>
