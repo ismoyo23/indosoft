@@ -5,7 +5,7 @@ import Admin from './page/Admin/Dashboard'
 import CrudBooks from './page/Admin/BooksCrud'
 import CrudAuthor from './page/Admin/AuthorCrud'
 import CrudGenre from './page/Admin/GenreCruds'
-
+import DetailBooks from './page/User/DetailBooks'
 
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
     <div style={{margin: '0', padding: '0'}}>
     <Router>
       <Switch>
+      <Route path='/DetailBooks' component={DetailBooks}/>
         {/* Route User */}
         <Route path='/' exact component={Users}/>
 
@@ -21,6 +22,8 @@ function App() {
         <Route path='/books' component={CrudBooks}/>
         <Route path='/author' component={CrudAuthor}/>
         <Route path='/genre' component={CrudGenre}/>
+
+        
       </Switch>
     </Router>
     </div>
