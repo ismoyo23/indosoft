@@ -10,7 +10,7 @@ class Login extends Component{
     render(){
         return(
             <>        
-                    <header>hallo
+                    <header>
                     </header>
 
             </>

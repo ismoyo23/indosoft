@@ -31,7 +31,7 @@ class Header extends Component{
                     </div> 
                     
                     <NavItem>
-                        <NavLink onClick={handleDropdownSettings} className={style.NavLink} href="#"><Link to='/Admin'><i className="fa fa-home"></i><span className={style.title}>Dashboard</span></Link></NavLink>
+                        <NavLink onClick={handleDropdownSettings} className={style.NavLink} href="#"><Link style={{color: 'white'}} to='/Admin'><i className="fa fa-home"></i><span className={style.title}>Dashboard</span></Link></NavLink>
                         
                     </NavItem>
 
@@ -48,7 +48,7 @@ class Header extends Component{
                     </NavItem>
 
                     <NavItem>
-                        <NavLink onClick={handleDropdownSettings} className={style.NavLink} href="#"><i className="fa fa-tasks" aria-hidden="true"></i><span className={style.title}>History</span>
+                        <NavLink onClick={handleDropdownSettings} className={style.NavLink} href="#"><i className="fa fa-tasks" aria-hidden="true"></i><span className={style.title}>User Page</span>
                     </NavLink>
                     </NavItem>
                 </Nav>

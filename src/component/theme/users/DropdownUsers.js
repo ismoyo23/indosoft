@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from '../../../styles/Users/Navbar.module.css'
 import img from '../../../image/slide1.jpg'
 import axios from 'axios'
@@ -35,8 +35,9 @@ function UserBeforeLogin(props){
       let [password, setPassword] = useState('')
       let [email, setEmail] = useState('')
       let [address, setAddress] = useState('')
-      let [role, setRole] = useState('1')
+      let [role, setRole] = useState('0')
       
+
       let HandleLogin = (event) => {
         event.preventDefault()
           axios({
@@ -48,7 +49,7 @@ function UserBeforeLogin(props){
             }
         })
         .then((response) => {
-            if(response.data.data[0].role === 1){
+          
               Swal.fire({
                 title: 'Success',
                 text: "Login Success",
@@ -61,11 +62,16 @@ function UserBeforeLogin(props){
                   localStorage.setItem('token', response.data.data[0].AccessToken)
                   localStorage.setItem('name_user', response.data.data[0].name_user)
                   localStorage.setItem('id', response.data.data[0].id_user)
-                  window.location.reload()
+                  if(response.data.data[0].role === 1){
+                    history.push('/admin')
+                  }else{
+                    window.location.reload()
+                  }
+                  
                 }
               })
               
-            }
+      
             
         })
         .catch((error) =>{
@@ -89,11 +95,17 @@ function UserBeforeLogin(props){
           }
       })
       .then((response) => {
-        Swal.fire(
-          'Success',
-          'Register Success',
-          'success'
-        )
+        Swal.fire({
+          title: 'Success',
+          text: "Regiter Success",
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (result.value) {
+              window.location.reload()
+          }
+        })
       })
       .catch((error) =>{
           console.log(error)
