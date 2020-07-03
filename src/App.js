@@ -7,8 +7,6 @@ import CrudBooks from './page/Admin/BooksCrud'
 import CrudAuthor from './page/Admin/AuthorCrud'
 import CrudGenre from './page/Admin/GenreCruds'
 import DetailBooks from './page/User/DetailBooks'
-
-
 function App() {
   return (
     <div style={{margin: '0', padding: '0'}}>

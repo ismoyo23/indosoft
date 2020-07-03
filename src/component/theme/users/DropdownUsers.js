@@ -4,7 +4,8 @@ import img from '../../../image/slide1.jpg'
 import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
-
+import {connect} from 'react-redux'
+// import {login} from '../r'
 import {
     NavItem,
     NavLink,
@@ -14,6 +15,7 @@ import {
 
     Form, FormGroup, Label, FormText
   } from 'reactstrap';
+import auth from '../../../redux/reducers/auth';
 
 function UserBeforeLogin(props){
   let history = useHistory()
@@ -40,44 +42,50 @@ function UserBeforeLogin(props){
 
       let HandleLogin = (event) => {
         event.preventDefault()
-          axios({
-            method: 'POST',
-            url: 'http://localhost:3000/books/login',
-            data:{
-                name_user: username,
-                password: password
-            }
-        })
-        .then((response) => {
+        const data = {
+          username: username,
+          password: password
+        }
+
+        console.log(data)
+        //   axios({
+        //     method: 'POST',
+        //     url: 'http://localhost:3000/books/login',
+        //     data:{
+        //         name_user: username,
+        //         password: password
+        //     }
+        // })
+        // .then((response) => {
           
-              Swal.fire({
-                title: 'Success',
-                text: "Login Success",
-                icon: 'success',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Ok'
-              }).then((result) => {
-                if (result.value) {
-                  console.log(result)
-                  localStorage.setItem('token', response.data.data[0].AccessToken)
-                  localStorage.setItem('name_user', response.data.data[0].name_user)
-                  localStorage.setItem('id', response.data.data[0].id_user)
-                  if(response.data.data[0].role === 1){
-                    history.push('/admin')
-                  }else{
-                    window.location.reload()
-                  }
+        //       Swal.fire({
+        //         title: 'Success',
+        //         text: "Login Success",
+        //         icon: 'success',
+        //         confirmButtonColor: '#3085d6',
+        //         confirmButtonText: 'Ok'
+        //       }).then((result) => {
+        //         if (result.value) {
+        //           console.log(result)
+        //           localStorage.setItem('token', response.data.data[0].AccessToken)
+        //           localStorage.setItem('name_user', response.data.data[0].name_user)
+        //           localStorage.setItem('id', response.data.data[0].id_user)
+        //           if(response.data.data[0].role === 1){
+        //             history.push('/admin')
+        //           }else{
+        //             window.location.reload()
+        //           }
                   
-                }
-              })
+        //         }
+        //       })
               
       
             
-        })
-        .catch((error) =>{
-          console.log(error)
+        // })
+        // .catch((error) =>{
+        //   console.log(error)
 
-        })
+        // })
       }
 
       let HandleRegister = (event) => {
@@ -216,4 +224,9 @@ function UserBeforeLogin(props){
     )
   }
 
-export default UserBeforeLogin
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+
+export default connect(mapStateToProps)(UserBeforeLogin)

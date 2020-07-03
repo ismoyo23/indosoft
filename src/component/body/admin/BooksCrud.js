@@ -5,7 +5,8 @@ import {Input,Table, Container, Row,Col, Card, Button, CardImg, CardTitle, CardT
     CardSubtitle, CardBody, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, FormText } from 'reactstrap';
 import style from '../../../styles/Admin/Body.module.css'
 import axios from 'axios'
-
+import FormData from 'form-data'
+require('dotenv').config()
 function BooksCrud(props){
 
     let [allBooks, setAllBooks] = useState([])
@@ -52,45 +53,48 @@ function BooksCrud(props){
         })
     }
 
+    let DeleteBooks = (event) => (id) => {
+        event.preventDefault()
+      
+    }
+
     let AddBooks = (event) => {
         event.preventDefault()
-
+        const formData = new FormData()
+        formData.append('title', title)
+        formData.append('discription', discription)
+        formData.append('image', images)
+        formData.append('stok', stok)
+        formData.append('id_genre', idGenre)
+        formData.append('id_author', idAuthor)
+        
         axios({
             method: 'POST',
-            url: 'http://localhost:3000/books',
-            data: {
-                title: title,
-                discription: discription,
-                image: images,
-                id_genre: idGenre,
-                id_author: idAuthor,
-                stok: stok
-              },
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'multipart/form-data'
-            }
+            url: `${process.env.REACT_URL}/books`,
+            data: formData
         })
         .then((response) => {
+            
             console.log(response)
             
         })
         .catch((error)=>{
+            
             console.log(error)
         })
         
     }
-
     let getAllBooks = () => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3000/books',
+            url: `${process.env.REACT_APP_URL}/books`,
         })
         .then((response) => {
             console.log(response)
             setAllBooks(response.data.data)
         })
         .catch((error)=>{
+            console.log('get all books')
             console.log(error)
         })
     }
@@ -141,7 +145,7 @@ function BooksCrud(props){
 
                     <FormGroup>
                         <Label for="exampleEmail">Upload Image</Label>
-                        <Input onChange={(e) => setImage((e.target.value))} color="warning" type="file"/>
+                        <Input onChange={(e) => setImage((e.target.files[0]))} color="warning" type="file"/>
                     </FormGroup>
 
                     <FormGroup>
