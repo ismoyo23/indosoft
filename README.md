@@ -1,9 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Project name
 
-### `Descriptions`
-
-This is a web-based library application created using the react js tool and several other packages
-
-### `Clone Project`
-
-https://github.com/ismoyo23/SetyaLibrary.git
+<!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and licence info here --->
+![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README-template.md)
+![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README-template.md)
+![GitHub stars](https://img.shields.io/github/stars/scottydocs/README-template.md?style=social)
+![GitHub forks](https://img.shields.io/github/forks/scottydocs/README-template.md?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/scottydocs?style=social)
