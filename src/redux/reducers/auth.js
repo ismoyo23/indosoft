@@ -21,13 +21,13 @@ const auth = (state = initialState, action) =>{
             errorMsg: 'Data Rejected'
         }
         case "LOGIN_FULFILED":
-        console.log();
+        console.log(action.payload);
             
         return {
             ...state,
             isLoading: false,
             isError: false,
-            data: action.payload.data.data[0]
+            // data: action.payload.data.data[0]
         }
         default: {
             return state

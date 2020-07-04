@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import style from '../../../styles/Users/Navbar.module.css'
-import img from '../../../image/slide1.jpg'
 import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
 import {connect} from 'react-redux'
-import {login} from '../../redux/actions/auth'
+import {login} from '../../../redux/actions/auth'
 import {
     NavItem,
     NavLink,
@@ -21,6 +20,7 @@ function UserBeforeLogin(props){
   let history = useHistory()
 
     const {
+
         buttonLabel,
         className
       } = props;
@@ -46,8 +46,7 @@ function UserBeforeLogin(props){
           username: username,
           password: password
         }
-
-        console.log(data)
+        props.login(data)
         //   axios({
         //     method: 'POST',
         //     url: 'http://localhost:3000/books/login',
@@ -164,8 +163,6 @@ function UserBeforeLogin(props){
         
         
       }
-
-      console.log(props.auth);
       
     return (
     
@@ -227,10 +224,9 @@ function UserBeforeLogin(props){
     </>
     )
   }
-
 const mapStateToProps = (state) => ({
   auth: state.auth
 })
+const mapDispatchToProp = {login}
 
-
-export default connect(mapStateToProps)(UserBeforeLogin)
+export default connect(mapStateToProps, mapDispatchToProp)(UserBeforeLogin)

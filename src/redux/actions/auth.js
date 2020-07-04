@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export let login = data => {
+    console.log(data)
     return{
         type: 'LOGIN',
         payload: axios({
