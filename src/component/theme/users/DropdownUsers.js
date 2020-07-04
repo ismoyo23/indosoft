@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
 import {connect} from 'react-redux'
-// import {login} from '../r'
+import {login} from '../../redux/actions/auth'
 import {
     NavItem,
     NavLink,
@@ -164,7 +164,11 @@ function UserBeforeLogin(props){
         
         
       }
+
+      console.log(props.auth);
+      
     return (
+    
      <>
 
      {/* Alert */}

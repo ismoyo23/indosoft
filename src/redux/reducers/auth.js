@@ -2,7 +2,7 @@ const initialState = {
     isLoading: false,
     isError: false,
     errorMsg: "",
-    data: []
+    data: {}
 }
 
 const auth = (state = initialState, action) =>{
