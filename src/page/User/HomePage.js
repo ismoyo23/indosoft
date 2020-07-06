@@ -11,24 +11,33 @@ function HomeUsers(props){
     let [Search, setSearch] = useState('')
     let [Genre, SetGenre] = useState('')
     let [sort, setSort] = useState('')
-    console.log(Search);
-    
+  
     useEffect(() => {
         getAllBooks()
     }, []);
 
-    // useEffect(() => {
-    //     getAllBooks()
-    // });
+  
+    useEffect(() => {
+        if(Search != ''){
+            getAllBooks() 
+        }
+        else if(Genre != ''){
+            getAllBooks()
+        }else if(Genre != ''){
+            getAllBooks()
+        }
+    });
     let getAllBooks = () => {
         let SearchBooks = Search === '' ? '' : `&search=${Search}&field=title`
         let genre = Genre === '' ? '' : `&search=${Genre}&field=book_detail.id_genre`
-        let SortBooks = sort === 'ASC' ? `/?sort=${sort}` : `/?sort=${sort}`
+        let SortBooks = sort === 'ASC' ? `/?sort=${sort}` : `/?sort=${sort}`        
+        
         axios({
             method: 'GET',
             url: `http://localhost:3000/books${SortBooks}${SearchBooks}${genre}`
         })
         .then((response) => {
+            console.log('response');
             setAllBooks(response.data.data)
         })
         .catch((error)=>{

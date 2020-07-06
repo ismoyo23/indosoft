@@ -21,9 +21,11 @@ function BooksCrud(props){
     }, []);
 
     // Component dit Update
-    // useEffect(() => {
-    //     getAllBooks()
-    // });
+    useEffect(() => {
+    if(search != ''){
+        getAllBooks() 
+    }
+    });
 
     let [id, setId] = useState('')
     let [title, setTitle] = useState('')
@@ -163,7 +165,6 @@ function BooksCrud(props){
             url: `http://localhost:3000/books/` + SearchBooks,
         })
         .then((response) => {
-            
             setAllBooks(response.data.data)
         })
         .catch((error)=>{

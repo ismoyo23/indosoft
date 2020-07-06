@@ -19,10 +19,7 @@ import {
   DropdownItem,
   NavbarText,
   Container,
-  Card, Button, Row, Col, Input,
-   CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle,
-  Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label
+  Card, Button, Row, Col, Input, FormGroup, Label
 } from 'reactstrap';
 
 
