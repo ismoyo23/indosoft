@@ -5,20 +5,18 @@ import { Link, useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
 import {connect} from 'react-redux'
 import {login} from '../../../redux/actions/auth'
+import {logout} from '../../../redux/actions/logout'
+
 import {
     NavItem,
     NavLink,
     Card, Button, Row, Col, Input,
     
-    Modal, ModalHeader, ModalBody, ModalFooter,
-
-    Form, FormGroup, Label, FormText
+    Modal, ModalHeader, ModalBody, FormGroup
   } from 'reactstrap';
-import auth from '../../../redux/reducers/auth';
 
 function UserBeforeLogin(props){
   let history = useHistory()
-
     const {
 
         buttonLabel,
@@ -47,44 +45,6 @@ function UserBeforeLogin(props){
           password: password
         }
         props.login(data)
-        //   axios({
-        //     method: 'POST',
-        //     url: 'http://localhost:3000/books/login',
-        //     data:{
-        //         name_user: username,
-        //         password: password
-        //     }
-        // })
-        // .then((response) => {
-          
-        //       Swal.fire({
-        //         title: 'Success',
-        //         text: "Login Success",
-        //         icon: 'success',
-        //         confirmButtonColor: '#3085d6',
-        //         confirmButtonText: 'Ok'
-        //       }).then((result) => {
-        //         if (result.value) {
-        //           console.log(result)
-        //           localStorage.setItem('token', response.data.data[0].AccessToken)
-        //           localStorage.setItem('name_user', response.data.data[0].name_user)
-        //           localStorage.setItem('id', response.data.data[0].id_user)
-        //           if(response.data.data[0].role === 1){
-        //             history.push('/admin')
-        //           }else{
-        //             window.location.reload()
-        //           }
-                  
-        //         }
-        //       })
-              
-      
-            
-        // })
-        // .catch((error) =>{
-        //   console.log(error)
-
-        // })
       }
 
       let HandleRegister = (event) => {
@@ -120,18 +80,19 @@ function UserBeforeLogin(props){
       }
 
       let IconUser = (props) =>{
-        if(props.localStorage === null ){
-          return(
-            <NavLink><i style={{color: 'white'}} class="fa fa-user-circle-o" aria-hidden="true"></i>
-                      <span className={style.NavLink}><strong onClick={props.login}>Login</strong> Or <strong onClick={props.register}>Register</strong></span></NavLink>
-          )
-        }
-        else{
-          return(
-            <NavLink><i style={{color: 'white'}} class="fa fa-user-circle-o" aria-hidden="true"></i>
-                      <span className={style.NavLink}>{localStorage.getItem('name_user')}</span> <span onClick={props.logout} className={style.NavLink}>Logout</span></NavLink>
-          )
-        }
+          if(props.localStorage == null ){
+            return(
+              <NavLink><i style={{color: 'white'}} class="fa fa-user-circle-o" aria-hidden="true"></i>
+                        <span className={style.NavLink}><strong onClick={props.login}>Login</strong> Or <strong onClick={props.register}>Register</strong></span></NavLink>
+            )
+          }
+          else{
+            
+            return(
+              <NavLink><i style={{color: 'white'}} class="fa fa-user-circle-o" aria-hidden="true"></i>
+                        <span className={style.NavLink}>{props.localStorage}</span> <span onClick={props.logout} className={style.NavLink}>Logout</span></NavLink>
+            )
+          }
         
       }
 
@@ -154,7 +115,7 @@ function UserBeforeLogin(props){
               confirmButtonText: 'Ok'
             }).then((result) => {
               if (result.value) {
-                localStorage.clear();
+                props.logout()
                 history.push('/')
               }
             })
@@ -163,7 +124,6 @@ function UserBeforeLogin(props){
         
         
       }
-      
     return (
     
      <>
@@ -218,7 +178,7 @@ function UserBeforeLogin(props){
 
 
             <NavItem>
-                <IconUser logout={logout} localStorage={localStorage.getItem('name_user')} user={user} login={login} register={register}/>
+                <IconUser logout={logout} localStorage={props.auth.data.name_user} user={user} login={login} register={register}/>
             </NavItem>
         
     </>
@@ -227,6 +187,6 @@ function UserBeforeLogin(props){
 const mapStateToProps = (state) => ({
   auth: state.auth
 })
-const mapDispatchToProp = {login}
+const mapDispatchToProp = {login, logout}
 
 export default connect(mapStateToProps, mapDispatchToProp)(UserBeforeLogin)

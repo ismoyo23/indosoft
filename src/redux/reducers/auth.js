@@ -6,6 +6,8 @@ const initialState = {
 }
 
 const auth = (state = initialState, action) =>{
+
+    
     switch (action.type) {
         case "LOGIN_PENDING":
         return {
@@ -20,14 +22,13 @@ const auth = (state = initialState, action) =>{
             isError: false,
             errorMsg: 'Data Rejected'
         }
-        case "LOGIN_FULFILED":
-        console.log(action.payload);
+        case "LOGIN_FULFILLED":
             
         return {
             ...state,
             isLoading: false,
             isError: false,
-            // data: action.payload.data.data[0]
+            data: action.payload.data.data[0]
         }
         default: {
             return state

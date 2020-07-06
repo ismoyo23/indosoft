@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Swiper from 'react-id-swiper';
+import Swal from 'sweetalert2'
 import {Input,Table, Container, Row,Col, Card, Button, CardImg, CardTitle, CardText, CardDeck,
     CardSubtitle, CardBody, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, FormText } from 'reactstrap';
 import style from '../../../styles/Admin/Body.module.css'
 import axios from 'axios'
 import FormData from 'form-data'
-require('dotenv').config()
-function BooksCrud(props){
+import {connect} from 'react-redux'
+import {login} from '../../../redux/actions/auth'
+import ReactLiveSearch from 'react-live-search'
 
+function BooksCrud(props){
     let [allBooks, setAllBooks] = useState([])
     let [allAuthor, setAllAuthor] = useState([])
     let [allGenre, setAllGenre] = useState([])
     useEffect(() => {
-     getAllBooks()
-     getAllAuthor()
-     getAllGenre()
+        getAllAuthor()
+        getAllGenre()
+        getAllBooks()
     }, []);
 
+    // Component dit Update
+    // useEffect(() => {
+    //     getAllBooks()
+    // });
+
+    let [id, setId] = useState('')
     let [title, setTitle] = useState('')
     let [discription, setDiscrption] = useState('')
     let [images, setImage] = useState('')
@@ -25,13 +33,20 @@ function BooksCrud(props){
     let [idAuthor, setIdAuthor] =useState('')
     let [stok, setStok] = useState('')
 
+    let [Action, setAction] = useState('')
+
+    let [modalTitle, setModalTitle] = useState('Add Books')
+
+    let [search, setSearch] = useState('')
+    
+
+    // get data All Author
     let getAllAuthor = () => {
         axios({
             method: 'GET',
             url: 'http://localhost:3000/books/author',
         })
         .then((response) => {
-            console.log(response)
             setAllAuthor(response.data.data)
         })
         .catch((error)=>{
@@ -39,13 +54,13 @@ function BooksCrud(props){
         })
     }
 
+    // get data All Genre
     let getAllGenre = () => {
         axios({
             method: 'GET',
             url: 'http://localhost:3000/books/genre/',
         })
         .then((response) => {
-            console.log(response)
             setAllGenre(response.data.data)
         })
         .catch((error)=>{
@@ -53,12 +68,63 @@ function BooksCrud(props){
         })
     }
 
-    let DeleteBooks = (event) => (id) => {
+    // Action Delete Books by id
+    let DeleteBooks = (id) => (event) => {
         event.preventDefault()
-      
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.value) {
+                axios({
+                    method: 'DELETE',
+                    url: `http://localhost:3000/books/${id}`
+                })
+                .then((response) => {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      )
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+            }
+          })
     }
 
-    let AddBooks = (event) => {
+    // Show Books by Id
+    let ShowBooks = (id) => (event) => {
+        event.preventDefault()
+        axios({
+            method: 'GET',
+            url: `http://localhost:3000/books/?search=${id}&field=id`
+        })
+        .then((response) => {
+            setModal(true)
+            setId(id)
+            setTitle(response.data.data[0].title)
+            setDiscrption(response.data.data[0].discription)
+            setIdAuthor(response.data.data[0].id_author)
+            setStok(response.data.data[0].stok)
+            setIdGenre(response.data.data[0].id_genre)
+            setModalTitle('Edit Data')
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+
+    }
+
+    // Action Add Books
+    let ActionBooks = (event) => {
         event.preventDefault()
         const formData = new FormData()
         formData.append('title', title)
@@ -68,35 +134,53 @@ function BooksCrud(props){
         formData.append('id_genre', idGenre)
         formData.append('id_author', idAuthor)
         
+        let ConUrl = modalTitle === 'Add Books' ? `http://localhost:3000/books` : `http://localhost:3000/books/${id}`
+        let Method = modalTitle === 'Add Books' ? `POST` : `PUT`
+        
         axios({
-            method: 'POST',
-            url: `${process.env.REACT_URL}/books`,
+            method: Method,
+            url: ConUrl,
             data: formData
         })
         .then((response) => {
-            
-            console.log(response)
+            Swal.fire(
+                'Deleted!',
+                `${modalTitle} success`,
+                'success'
+              )
             
         })
         .catch((error)=>{
-            
             console.log(error)
         })
         
     }
-    let getAllBooks = () => {
-        axios({
+
+    let getAllBooks = async () => {
+        let SearchBooks = search === '' ? '' : `?search=${search}&field=title`
+        await axios({
             method: 'GET',
-            url: `${process.env.REACT_APP_URL}/books`,
+            url: `http://localhost:3000/books/` + SearchBooks,
         })
         .then((response) => {
-            console.log(response)
+            
             setAllBooks(response.data.data)
         })
         .catch((error)=>{
-            console.log('get all books')
             console.log(error)
         })
+    }
+
+    let CloseModal = () =>{
+            setModal(false)
+            setTitle('')
+            setDiscrption('')
+            setIdAuthor('')
+            setStok('')
+            setIdGenre('')
+            setModalTitle('Add Books')
+
+            setAction('AddBooks')
     }
     const {
         buttonLabel,
@@ -110,8 +194,8 @@ function BooksCrud(props){
         <>
             {/* modal */}
             <Modal isOpen={modal} toggle={toggle} className={className}>
-                <form onSubmit={AddBooks}>
-                <ModalHeader toggle={toggle}>Add Books</ModalHeader>
+                <form onSubmit={ActionBooks}>
+                <ModalHeader toggle={toggle}>{modalTitle}</ModalHeader>
                 <ModalBody>
                 <Form>
                     <FormGroup>
@@ -162,8 +246,8 @@ function BooksCrud(props){
                 </ModalBody>
 
                 <ModalFooter>
-                <Button onClick={AddBooks} color="primary">Add</Button>
-                <Button color="secondary" onClick={toggle}>Cancel</Button>
+                <Button color="primary">{modalTitle}</Button>
+                <Button color="secondary" onClick={CloseModal}>Cancel</Button>
                 </ModalFooter>
                 </form>
             </Modal>
@@ -181,7 +265,7 @@ function BooksCrud(props){
                 </Col>
 
                 <Col md='6'>
-                    <Input className={style.Search} type="text"  placeholder="Search" />
+                    <Input value={search} onChange={(e) => setSearch(e.target.value)} className={style.Search} type="text"  placeholder="Search" />
                 </Col>
                 </Row>
                     <Table hover className={style.Table}>
@@ -203,9 +287,9 @@ function BooksCrud(props){
                                 <td>{allBooks.discription.substr('0','22')}</td>
                                 <td>{allBooks.stok}</td>
                                 <td>
-                                    <Button color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    <Button onClick={ShowBooks(allBooks.id)} color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </Button>
-                                    <Button color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
+                                    <Button onClick={DeleteBooks(allBooks.id)} color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
                                     </Button>
                                 </td>
                             </tr>                 
@@ -223,4 +307,9 @@ function BooksCrud(props){
     )
 }
 
-export default BooksCrud
+const mapStateToProps = (state) => ({
+    auth: state.auth
+  })
+  const mapDispatchToProp = {login}
+  
+  export default connect(mapStateToProps, mapDispatchToProp)(BooksCrud)

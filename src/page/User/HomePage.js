@@ -5,25 +5,30 @@ import HomePage from '../../component/body/users/HomePage'
 import SlideShow from '../../component/body/users/SlideShow'
 import axios from 'axios'
 import {Row, Container} from 'reactstrap'
-function HomeUsers(){
+function HomeUsers(props){
 
-let [allBooks, setAllBooks] = useState([]) 
-
+    let [allBooks, setAllBooks] = useState([]) 
+    let [Search, setSearch] = useState('')
+    let [Genre, SetGenre] = useState('')
+    let [sort, setSort] = useState('')
+    console.log(Search);
+    
     useEffect(() => {
-        getAllProduct()
+        getAllBooks()
     }, []);
 
-    let getAllProduct = () => {
-        let token = localStorage.getItem('token')
+    // useEffect(() => {
+    //     getAllBooks()
+    // });
+    let getAllBooks = () => {
+        let SearchBooks = Search === '' ? '' : `&search=${Search}&field=title`
+        let genre = Genre === '' ? '' : `&search=${Genre}&field=book_detail.id_genre`
+        let SortBooks = sort === 'ASC' ? `/?sort=${sort}` : `/?sort=${sort}`
         axios({
             method: 'GET',
-            url: 'http://localhost:3000/books',
-            headers: {
-                Authorization: token
-            }
+            url: `http://localhost:3000/books${SortBooks}${SearchBooks}${genre}`
         })
         .then((response) => {
-            console.log(response)
             setAllBooks(response.data.data)
         })
         .catch((error)=>{
@@ -33,7 +38,7 @@ let [allBooks, setAllBooks] = useState([])
 
     return (
         <>
-            <Navbar/>
+            <Navbar sort={setSort} valSort={sort} valGenre={Genre} genre={SetGenre} value={Search} Search={(e) => setSearch(e.target.value)}/>
             <SlideShow/>
             <Container>
             <header className={style.headerBooks}>List Books</header>

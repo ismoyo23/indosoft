@@ -11,7 +11,6 @@ import {
 } from 'reactstrap';
 
 function HomePage(props){
-console.log(props)
     let params = {
         effect: 'cube',
       grabCursor: true,

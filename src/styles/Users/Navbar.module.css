@@ -94,6 +94,11 @@
     margin-top: 12px;
 }
 
+.imgCard{
+    width: 157px;
+    height: 200px;
+}
+
 .cardBody:hover .back{
     bottom: 0;
   height: 100%;

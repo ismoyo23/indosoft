@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from '../../../styles/Users/Navbar.module.css'
 import 'font-awesome/css/font-awesome.min.css';
 import 'swiper/css/swiper.css';
 import UserBeforeLogin from './DropdownUsers'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
 import {
   Collapse,
   Navbar,
@@ -20,15 +21,33 @@ import {
   Container,
   Card, Button, Row, Col, Input,
    CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle
+  CardTitle, CardSubtitle,
+  Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label
 } from 'reactstrap';
 
 
 
-function NavbarPage(){
+function NavbarPage(props){
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
+    let [allGenre, setAllGenre] = useState([])
 
+    useEffect(() => {
+      getAllGenre()
+  }, []);
+
+    let getAllGenre = () => {
+      axios({
+          method: 'GET',
+          url: 'http://localhost:3000/books/genre/',
+      })
+      .then((response) => {
+          setAllGenre(response.data.data)
+      })
+      .catch((error)=>{
+          console.log(error)
+      })
+  }
     
     return(
         <>
@@ -45,7 +64,7 @@ function NavbarPage(){
             <UserBeforeLogin/>
 
             <NavItem >
-            <Input type="email" name="text" id="exampleEmail" placeholder="Search..." />
+            <Input value={props.value} onChange={props.Search} id="exampleEmail" placeholder="Search..." />
             </NavItem>
 
           </Nav>
@@ -68,42 +87,25 @@ function NavbarPage(){
           <NavItem>
               <Link to="/"><NavLink className={style.NavItem}>Home</NavLink></Link>
             </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                <span className={style.NavItem}>Category</span>
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Reset
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                <span className={style.NavItem}>All Time</span>
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Reset
-                </DropdownItem>
-              </DropdownMenu>
+            <FormGroup style={{width: '10px !important'}}>
+           <Input  value={props.ValGenre} onChange={(e) => props.genre(e.target.value)} type="select" name="select" id="exampleSelect">
+           <option value=''>All</option>
+            {allGenre.map((allGenre) => {
+              return(
               
-            </UncontrolledDropdown>
+              <option value={allGenre.id_genre}>{allGenre.name_genre}</option>
+              )
+            })}
+                        
+              </Input>
+          </FormGroup>
+
+          <FormGroup style={{width: '10px !important'}}>
+           <Input  value={props.ValSort} onChange={(e) => props.sort(e.target.value)} type="select" name="select" id="exampleSelect">
+              <option value='ASC'>A-Z</option>
+              <option value='DESC'>Z-A</option>        
+              </Input>
+          </FormGroup>
 
             <NavItem>
               <Link to="/borowerbooks"><NavLink className={style.NavItem}>Books Borrowed</NavLink></Link>
@@ -123,3 +125,5 @@ function NavbarPage(){
 }
 
 export default NavbarPage
+
+// value={props.ValGenre} onChange={(e) => props.genre(e.target.value)}
