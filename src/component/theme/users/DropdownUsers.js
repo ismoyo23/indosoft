@@ -12,10 +12,12 @@ import {
     NavLink,
     Card, Button, Row, Col, Input,
     
-    Modal, ModalHeader, ModalBody, FormGroup
+    Modal,ModalBody, FormGroup
   } from 'reactstrap';
 
 function UserBeforeLogin(props){
+  console.log(props);
+  
   let history = useHistory()
     const {
 
@@ -42,7 +44,8 @@ function UserBeforeLogin(props){
         event.preventDefault()
         const data = {
           username: username,
-          password: password
+          password: password,
+          env: process.env.REACT_APP_URL
         }
         props.login(data)
       }
@@ -52,7 +55,7 @@ function UserBeforeLogin(props){
 
         axios({
           method: 'POST',
-          url: 'http://localhost:3000/books/register',
+          url: `${process.env.REACT_APP_URL}books/register`,
           data: {
             name_user: username,
             email: email,

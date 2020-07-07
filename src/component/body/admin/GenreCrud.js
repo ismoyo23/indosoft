@@ -4,7 +4,6 @@ import {Input,Table, Container, Row,Col, Card, Button, CardImg, CardTitle, CardT
     CardSubtitle, CardBody, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, FormText } from 'reactstrap';
 import style from '../../../styles/Admin/Body.module.css'
 import axios from 'axios'
-import FormData from 'form-data'
 import Swal from 'sweetalert2'
 function GenreCrud(props){
     const {
@@ -32,7 +31,7 @@ function GenreCrud(props){
       
       let ActionGenre = (event) => {
         event.preventDefault()
-        let ConUrl = modalTitle == 'Add Genre' ? `http://localhost:3000/books/genre` : `http://localhost:3000/books/genre/${id}`
+        let ConUrl = modalTitle == 'Add Genre' ? `${process.env.REACT_APP_URL}books/genre` : `${process.env.REACT_APP_URL}books/genre/${id}`
         let Method = modalTitle == 'Add Genre' ? `POST` : `PUT`
         
         axios({
@@ -57,7 +56,7 @@ function GenreCrud(props){
         let Search = search == '' ? '' : `/?field=name_genre&search=${search}`
         await axios({
             method: 'GET',
-            url: `http://localhost:3000/books/genre${Search}`
+            url: `${process.env.REACT_APP_URL}books/genre${Search}`
         })
         .then((response) => {            
             setGenre(response.data.data)
@@ -69,7 +68,7 @@ function GenreCrud(props){
         event.preventDefault()
         axios({
             method: 'GET',
-            url: `http://localhost:3000/books/genre/?field=name_genre&search=${id}`
+            url: `${process.env.REACT_APP_URL}books/genre/?field=name_genre&search=${id}`
         })
         .then((response) => {
             setId(id)
@@ -98,7 +97,7 @@ function GenreCrud(props){
             if (result.value) {
                 axios({
                     method: 'DELETE',
-                    url: `http://localhost:3000/books/genre/${id}`
+                    url: `${process.env.REACT_APP_URL}books/genre/${id}`
                 })
                 .then((response) => {
                     Swal.fire(

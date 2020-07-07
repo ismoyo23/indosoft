@@ -46,7 +46,7 @@ function BooksCrud(props){
     let getAllAuthor = () => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3000/books/author',
+            url: `${process.env.REACT_APP_URL}books/author`,
         })
         .then((response) => {
             setAllAuthor(response.data.data)
@@ -60,7 +60,7 @@ function BooksCrud(props){
     let getAllGenre = () => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3000/books/genre/',
+            url: `${process.env.REACT_APP_URL}books/genre/`,
         })
         .then((response) => {
             setAllGenre(response.data.data)
@@ -86,7 +86,7 @@ function BooksCrud(props){
             if (result.value) {
                 axios({
                     method: 'DELETE',
-                    url: `http://localhost:3000/books/${id}`
+                    url: `${process.env.REACT_APP_URL}books/${id}`
                 })
                 .then((response) => {
                     Swal.fire(
@@ -107,7 +107,7 @@ function BooksCrud(props){
         event.preventDefault()
         axios({
             method: 'GET',
-            url: `http://localhost:3000/books/?search=${id}&field=id`
+            url: `${process.env.REACT_APP_URL}?search=${id}&field=id`
         })
         .then((response) => {
             setModal(true)
@@ -136,7 +136,7 @@ function BooksCrud(props){
         formData.append('id_genre', idGenre)
         formData.append('id_author', idAuthor)
         
-        let ConUrl = modalTitle === 'Add Books' ? `http://localhost:3000/books` : `http://localhost:3000/books/${id}`
+        let ConUrl = modalTitle === 'Add Books' ? `${process.env.REACT_APP_URL}books` : `${process.env.REACT_APP_URL}books/${id}`
         let Method = modalTitle === 'Add Books' ? `POST` : `PUT`
         
         axios({
@@ -162,7 +162,7 @@ function BooksCrud(props){
         let SearchBooks = search === '' ? '' : `?search=${search}&field=title`
         await axios({
             method: 'GET',
-            url: `http://localhost:3000/books/` + SearchBooks,
+            url: `${process.env.REACT_APP_URL}books/` + SearchBooks,
         })
         .then((response) => {
             setAllBooks(response.data.data)
@@ -180,7 +180,6 @@ function BooksCrud(props){
             setStok('')
             setIdGenre('')
             setModalTitle('Add Books')
-
             setAction('AddBooks')
     }
     const {

@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 const initialState = {
     isLoading: false,
     isError: false,
@@ -5,9 +6,7 @@ const initialState = {
     data: {}
 }
 
-const auth = (state = initialState, action) =>{
-
-    
+let auth = (state = initialState, action) =>{
     switch (action.type) {
         case "LOGIN_PENDING":
         return {
@@ -15,7 +14,7 @@ const auth = (state = initialState, action) =>{
             isLoading: true,
             isError: false
         }
-        case "LOGIN_REJECT":
+        case "LOGIN_REJECTED":
         return {
             ...state,
             isLoading: true,

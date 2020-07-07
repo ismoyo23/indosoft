@@ -1,15 +1,13 @@
 import axios from 'axios'
 
-export let login = data => {
-    return{
-        type: 'LOGIN',
+export const login = (data) => ({
+    type: 'LOGIN',
         payload: axios({
             method: 'POST',
-            url: 'http://localhost:3000/books/login',
+            url: `${data.env}books/login`,
             data:{
                 name_user: data.username,
                 password: data.password
             }
         })
-    }
-}
+})

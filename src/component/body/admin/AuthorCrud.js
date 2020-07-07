@@ -6,17 +6,21 @@ import {Input,Table, Container, Row,Col, Card, Button, CardImg, CardTitle, CardT
 import style from '../../../styles/Admin/Body.module.css'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import {crud} from '../../../redux/actions/crud'
+import {connect} from 'react-redux'
 function AuthorCrud(props){
-
+    console.log(props);
+    
     useEffect(() => {
-        GetAuthor()
+        props.crud(process.env.REACT_APP_URL)
     }, [])
 
     const {
         buttonLabel,
         className
       } = props;
-    
+      
+      let [isLoading, setIsLoading] = useState(true)
       let [modal, setModal] = useState(false);
       let toggle = () => setModal(!modal);
       let [nameAuthor, setNameAuthor] = useState('')
@@ -25,15 +29,17 @@ function AuthorCrud(props){
       let [modalTitle, setModalTitle] = useState('Add Author')
       let [profileAuthor, setProfileAuthor] =useState('')
 
-      let GetAuthor = () => {
-          axios({
-              methot: 'GET',
-              url: 'http://localhost:3000/books/author'
-          })
-          .then((response) => {
-              setAuthor(response.data.data)
-          })
+      useEffect(() => {
+        setIsLoading(props.crud.isLoading)
+      }, [])
+      if (isLoading) {
+        console.log('masih loading');
+      }else{
+          console.log(props.crud);
+          
       }
+      
+      
       let DeleteAuthor = (id) => (event) =>{
         event.preventDefault()
         Swal.fire({
@@ -48,7 +54,7 @@ function AuthorCrud(props){
             if (result.value) {
                 axios({
                     method: 'DELETE',
-                    url: `http://localhost:3000/books/author/${id}`
+                    url: `${process.env.REACT_APP_URL}books/author/${id}`
                 })
                 .then((response) => {
                   Swal.fire(
@@ -63,7 +69,7 @@ function AuthorCrud(props){
 
       let ActionAuthor = (event) => {
         event.preventDefault()
-        let ConUrl = modalTitle == 'Add Author' ? 'http://localhost:3000/books/author' : `http://localhost:3000/books/author/${id}`
+        let ConUrl = modalTitle == 'Add Author' ? `${process.env.REACT_APP_URL}books/author` : `${process.env.REACT_APP_URL}books/author/${id}`
         let Method = modalTitle == 'Add Author' ? 'POST' : 'PUT'
         axios({
             method: Method,
@@ -90,7 +96,7 @@ function AuthorCrud(props){
           event.preventDefault()
           axios({
               methot: 'GET',
-              url: `http://localhost:3000/books/author?field=id_author&search=${id}`
+              url: `${process.env.REACT_APP_URL}books/author?field=id_author&search=${id}`
           })
           .then((response) => {
               setModal(true)
@@ -184,4 +190,9 @@ function AuthorCrud(props){
     )
 }
 
-export default AuthorCrud
+const mapStateToProps = (state) => ({
+    crud: state.crud
+  })
+  const mapDispatchToProp = {crud}
+  
+export default connect(mapStateToProps, mapDispatchToProp)(AuthorCrud)
