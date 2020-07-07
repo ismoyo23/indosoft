@@ -4,61 +4,125 @@ import Swiper from 'react-id-swiper';
 import {Input,Table, Container, Row,Col, Card, Button, CardImg, CardTitle, CardText, CardDeck,
     CardSubtitle, CardBody, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, FormText } from 'reactstrap';
 import style from '../../../styles/Admin/Body.module.css'
-
+import axios from 'axios'
+import Swal from 'sweetalert2'
 function AuthorCrud(props){
+
+    useEffect(() => {
+        GetAuthor()
+    }, [])
+
     const {
         buttonLabel,
         className
       } = props;
     
-      const [modal, setModal] = useState(false);
-    
-      const toggle = () => setModal(!modal);
+      let [modal, setModal] = useState(false);
+      let toggle = () => setModal(!modal);
+      let [nameAuthor, setNameAuthor] = useState('')
+      let [author, setAuthor] =useState([])
+      let [id, setId] = useState()
+      let [modalTitle, setModalTitle] = useState('Add Author')
+
+      let GetAuthor = () => {
+          axios({
+              methot: 'GET',
+              url: 'http://localhost:3000/books/author'
+          })
+          .then((response) => {
+              setAuthor(response.data.data)
+          })
+      }
+      let DeleteAuthor = (id) => (event) =>{
+        event.preventDefault()
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.value) {
+                axios({
+                    method: 'DELETE',
+                    url: `http://localhost:3000/books/author/${id}`
+                })
+                .then((response) => {
+                  Swal.fire(
+                      'Deleted!',
+                      'Your file has been deleted.',
+                      'success'
+                    )
+                })
+            }
+          })
+      }
+
+      let ActionAuthor = (event) => {
+        event.preventDefault()
+        let ConUrl = modalTitle == 'Add Author' ? 'http://localhost:3000/books/author' : `http://localhost:3000/books/author${id}`
+        let Method = modalTitle == 'Add Author' ? 'POST' : 'PUT'
+        axios({
+            method: Method,
+            url: ConUrl,
+            data: {
+                'name_author': nameAuthor
+            }
+        })
+        .then((response) => {
+            Swal.fire(
+                'Success!',
+                `${modalTitle} success`,
+                'success'
+              )
+        })
+        .catch((error)=>{
+            console.log(error);
+            
+        })
+      }
+
+      let showAuthor = (id) => (event) =>{
+          event.preventDefault()
+          axios({
+              methot: 'GET',
+              url: `http://localhost:3000/books/author?field=id_author&search=${id}`
+          })
+          .then((response) => {
+              setModal(true)
+              setNameAuthor(response.data.data[0].name_author)
+              setModalTitle('Edit Author')
+              setId(id)
+          })
+      }
+
+      let close = () => {
+        setModal(false)
+        setNameAuthor('')
+        setModalTitle('Add Author')
+      }
+
     return(
         <>
             {/* modal */}
             <Modal isOpen={modal} toggle={toggle} className={className}>
-                <form>
-                <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                <form onSubmit={ActionAuthor}>
+                <ModalHeader toggle={toggle}>{modalTitle}</ModalHeader>
                 <ModalBody>
                 <Form>
                     <FormGroup>
-                        <Label for="exampleEmail">Title</Label>
-                        <Input type="text" id="exampleEmail" placeholder="Title Books" />
+                        <Label for="exampleEmail">Name Author</Label>
+                        <Input onChange={(e) => setNameAuthor(e.target.value)} value={nameAuthor} type="text" id="exampleEmail" placeholder="Name Author" />
                     </FormGroup>
                     
-                    <FormGroup>
-                        <Label for="exampleSelect">Author</Label>
-                        <Input type="select" name="select" id="exampleSelect">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        </Input>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="exampleEmail">Upload Image</Label>
-                        <Input color="warning" type="file"/>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="exampleText">Desciption</Label>
-                        <Input type="textarea" name="text" id="exampleText" />
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="exampleEmail">Stok</Label>
-                        <Input type="text" id="exampleEmail" placeholder="Stok" />
-                    </FormGroup>
-
                     </Form>
                 </ModalBody>
 
                 <ModalFooter>
-                <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-                <Button color="secondary" onClick={toggle}>Cancel</Button>
+                <Button color="primary">{modalTitle}</Button>
+                <Button color="secondary" onClick={close}>Cancel</Button>
                 </ModalFooter>
                 </form>
             </Modal>
@@ -84,134 +148,24 @@ function AuthorCrud(props){
                             <tr>
                                 <th>No</th>
                                 <th>Title</th>
-                                <th>Author</th>
-                                <th>desciption</th>
-                                <th>Stok</th>
-                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {author.map((author,key)=> {
+                                return(
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>asd</td>
-                                <td>Availabe</td>
+                                <td>{key + 1}</td>
+                                <td>{author.name_author}</td>
                                 <td>
-                                    <Button color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    <Button onClick={showAuthor(author.id_author)} color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </Button>
-                                    <Button color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
+                                    <Button onClick={DeleteAuthor(author.id_author)} color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
                                     </Button>
                                 </td>
                             </tr>
-
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>asd</td>
-                                <td>Availabe</td>
-                                <td>
-                                    <Button color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </Button>
-                                    <Button color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
-                                    </Button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>asd</td>
-                                <td>Availabe</td>
-                                <td>
-                                    <Button color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </Button>
-                                    <Button color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
-                                    </Button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>asd</td>
-                                <td>Availabe</td>
-                                <td>
-                                    <Button color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </Button>
-                                    <Button color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
-                                    </Button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>asd</td>
-                                <td>Availabe</td>
-                                <td>
-                                    <Button color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </Button>
-                                    <Button color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
-                                    </Button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>asd</td>
-                                <td>Availabe</td>
-                                <td>
-                                    <Button color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </Button>
-                                    <Button color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
-                                    </Button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>asd</td>
-                                <td>Availabe</td>
-                                <td>
-                                    <Button color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </Button>
-                                    <Button color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
-                                    </Button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>asd</td>
-                                <td>Availabe</td>
-                                <td>
-                                    <Button color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </Button>
-                                    <Button color="danger"><i class="fa fa-trash" aria-hidden="true"></i>
-                                    </Button>
-                                </td>
-                            </tr>
-                            
+                            )
+                         })}
                         </tbody>
                         </Table>
                     </Card>

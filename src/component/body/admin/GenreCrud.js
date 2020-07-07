@@ -15,6 +15,12 @@ function GenreCrud(props){
       useEffect(() => {
         GetAllGenre()
       }, [])
+
+      useEffect(() => {
+          if (search != '') {
+            GetAllGenre()
+          }
+      })
     
       const [modal, setModal] = useState(false);
       const toggle = () => setModal(!modal);
@@ -22,12 +28,12 @@ function GenreCrud(props){
       let [genre, setGenre] = useState([])
       let [id, setId] = useState()
       let [modalTitle, setModalTitle] = useState('Add Genre')
+      let [search, setSearch] = useState('')
       
       let ActionGenre = (event) => {
         event.preventDefault()
-        
-        let ConUrl = modalTitle === 'Add Genre' ? `http://localhost:3000/books/genre` : `http://localhost:3000/books/genre/${id}`
-        let Method = modalTitle === 'Add Genre' ? `POST` : `PUT`
+        let ConUrl = modalTitle == 'Add Genre' ? `http://localhost:3000/books/genre` : `http://localhost:3000/books/genre/${id}`
+        let Method = modalTitle == 'Add Genre' ? `POST` : `PUT`
         
         axios({
             method: Method,
@@ -43,14 +49,15 @@ function GenreCrud(props){
                 'success'
               )
             
-        }) 
+        })
     }
 
     // get data
     let GetAllGenre = async () => {
+        let Search = search == '' ? '' : `/?field=name_genre&search=${search}`
         await axios({
             method: 'GET',
-            url: 'http://localhost:3000/books/genre/'
+            url: `http://localhost:3000/books/genre${Search}`
         })
         .then((response) => {            
             setGenre(response.data.data)
@@ -62,12 +69,13 @@ function GenreCrud(props){
         event.preventDefault()
         axios({
             method: 'GET',
-            url: `http://localhost:3000/books/genre/?field=id_genre&search=${id}`
+            url: `http://localhost:3000/books/genre/?field=name_genre&search=${id}`
         })
         .then((response) => {
+            setId(id)
             setModal(true)
             setNameGenre(response.data.data[0].name_genre)
-            setModalTitle('Edit Genre')
+            setModalTitle('Edit Genre')     
         })
         .catch((error) => {
             console.log(error);
@@ -101,15 +109,19 @@ function GenreCrud(props){
                 })
             }
           })
+    }
 
-        
+    let Close = () =>{
+        setModalTitle('Add Genre')
+        setModal(false)
+        setId('')
     }
     return(
         <>
             {/* modal */}
             <Modal isOpen={modal} toggle={toggle} className={className}>
                 <form onSubmit={ActionGenre}>
-                <ModalHeader toggle={toggle}>Add Genre</ModalHeader>
+                <ModalHeader toggle={toggle}>{modalTitle}</ModalHeader>
                 <ModalBody>
                 <Form>
                     <FormGroup>
@@ -120,8 +132,8 @@ function GenreCrud(props){
                 </ModalBody>
 
                 <ModalFooter>
-                <Button color="primary" >Add</Button>
-                <Button color="secondary" onClick={toggle}>Close</Button>
+                <Button color="primary" >{modalTitle}</Button>
+                <Button color="secondary" onClick={Close}>Close</Button>
                 </ModalFooter>
                 </form>
             </Modal>
@@ -139,7 +151,7 @@ function GenreCrud(props){
                 </Col>
 
                 <Col md='6'>
-                    <Input className={style.Search} type="text"  placeholder="Search" />
+                    <Input value={search} onChange={(e) => setSearch(e.target.value)} className={style.Search} type="text"  placeholder="Search" />
                 </Col>
                 </Row>
                     <Table hover className={style.Table}>
@@ -154,7 +166,7 @@ function GenreCrud(props){
                             {genre.map((genre, key) =>{
                                 return(
                             <tr>
-                                <th scope="row">{key}</th>
+                                <td scope="row">{key+1}</td>
                                 <td>{genre.name_genre}</td>
                                 <td>
                                     <Button onClick={ShowGenre(genre.id_genre)} color="primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
