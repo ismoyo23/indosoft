@@ -10,3 +10,7 @@
 
 # Struktur folder Problem
 src/component/body/body/admin/AuthorCrud.js
+
+
+# ENV
+REACT_APP_URL=http://localhost:3000/
