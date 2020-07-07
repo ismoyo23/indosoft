@@ -23,6 +23,7 @@ function AuthorCrud(props){
       let [author, setAuthor] =useState([])
       let [id, setId] = useState()
       let [modalTitle, setModalTitle] = useState('Add Author')
+      let [profileAuthor, setProfileAuthor] =useState('')
 
       let GetAuthor = () => {
           axios({
@@ -62,13 +63,14 @@ function AuthorCrud(props){
 
       let ActionAuthor = (event) => {
         event.preventDefault()
-        let ConUrl = modalTitle == 'Add Author' ? 'http://localhost:3000/books/author' : `http://localhost:3000/books/author${id}`
+        let ConUrl = modalTitle == 'Add Author' ? 'http://localhost:3000/books/author' : `http://localhost:3000/books/author/${id}`
         let Method = modalTitle == 'Add Author' ? 'POST' : 'PUT'
         axios({
             method: Method,
             url: ConUrl,
             data: {
-                'name_author': nameAuthor
+                'name_author': nameAuthor,
+                'profile_author': profileAuthor
             }
         })
         .then((response) => {
@@ -93,6 +95,7 @@ function AuthorCrud(props){
           .then((response) => {
               setModal(true)
               setNameAuthor(response.data.data[0].name_author)
+              setProfileAuthor(response.data.data[0].profile_author)
               setModalTitle('Edit Author')
               setId(id)
           })
@@ -115,6 +118,11 @@ function AuthorCrud(props){
                     <FormGroup>
                         <Label for="exampleEmail">Name Author</Label>
                         <Input onChange={(e) => setNameAuthor(e.target.value)} value={nameAuthor} type="text" id="exampleEmail" placeholder="Name Author" />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="exampleText">Profile Author</Label>
+                        <Input onChange={(e)=> setProfileAuthor(e.target.value)} value={profileAuthor} type="textarea" name="text" id="exampleText" />
                     </FormGroup>
                     
                     </Form>
