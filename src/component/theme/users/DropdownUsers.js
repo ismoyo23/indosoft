@@ -4,8 +4,7 @@ import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
 import {connect} from 'react-redux'
-import {login} from '../../../redux/actions/auth'
-import {logout} from '../../../redux/actions/logout'
+import {login, logout} from '../../../redux/actions/auth'
 
 import {
     NavItem,
@@ -14,23 +13,23 @@ import {
     
     Modal,ModalBody, FormGroup
   } from 'reactstrap';
+import { ActionType } from 'redux-promise-middleware';
 
 function UserBeforeLogin(props){
-  console.log(props);
-  
   let history = useHistory()
     const {
 
         buttonLabel,
         className
       } = props;
-    
+
+// =========================================================
+// state using Hooks
       const [modal, setModal] = useState(false);
       const [modalLogin, setModalLogin] = useState(false);
     
       const login = () => setModalLogin(!modalLogin);
       const register = () => setModal(!modal);
-
 
       let [user, setUser] = useState('false')
       let [username, setUsername] = useState('')
@@ -39,6 +38,8 @@ function UserBeforeLogin(props){
       let [address, setAddress] = useState('')
       let [role, setRole] = useState('0')
       
+// =========================================================
+// Handle Login
 
       let HandleLogin = (event) => {
         event.preventDefault()
@@ -48,8 +49,19 @@ function UserBeforeLogin(props){
           env: process.env.REACT_APP_URL
         }
         props.login(data)
+        .then((props)=>{
+          if (props.action.payload.data.data[0].role == 0) {
+            history.push('/')
+          }else{
+            history.push('/admin')
+          }
+          
+          
+        })
       }
 
+// =========================================================
+// Handle Register 
       let HandleRegister = (event) => {
         event.preventDefault()
 
@@ -81,7 +93,8 @@ function UserBeforeLogin(props){
           console.log(error)
       })
       }
-
+// =========================================================
+// Set Icon User with conditions
       let IconUser = (props) =>{
           if(props.localStorage == null ){
             return(
@@ -90,7 +103,6 @@ function UserBeforeLogin(props){
             )
           }
           else{
-            
             return(
               <NavLink><i style={{color: 'white'}} class="fa fa-user-circle-o" aria-hidden="true"></i>
                         <span className={style.NavLink}>{props.localStorage}</span> <span onClick={props.logout} className={style.NavLink}>Logout</span></NavLink>
@@ -98,6 +110,8 @@ function UserBeforeLogin(props){
           }
         
       }
+// =========================================================
+// function Logout
 
       let logout = () => {
         Swal.fire({
@@ -124,16 +138,14 @@ function UserBeforeLogin(props){
             })
           }
         })
-        
-        
       }
+// =========================================================
     return (
     
      <>
-
-     {/* Alert */}
         
-
+        {/* ====================================================================== */}
+        {/* Modal Login */}
         <Modal className={style.ModalLogin} isOpen={modalLogin} toggle={login}>
             <ModalBody className={style.ModalBackGrond}>
             <div className={style.IconModalColor}>
@@ -153,8 +165,8 @@ function UserBeforeLogin(props){
             </ModalBody>
         </Modal>
 
-
-      {/* modal register */}
+      {/* ====================================================================== */}
+      {/* Modal Regiter */}
         <Modal className={style.ModalLogin} isOpen={modal} toggle={register}>
         <ModalBody className={style.ModalBackGrond}>
             <div className={style.IconModalColor}>
@@ -178,12 +190,12 @@ function UserBeforeLogin(props){
           </form>
             </ModalBody>
         </Modal>
-
-
+      {/* ====================================================================== */}
+      {/* Icon Image for login and logout */}
             <NavItem>
                 <IconUser logout={logout} localStorage={props.auth.data.name_user} user={user} login={login} register={register}/>
             </NavItem>
-        
+       {/* ====================================================================== */}
     </>
     )
   }

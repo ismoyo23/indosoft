@@ -5,6 +5,8 @@ import 'font-awesome/css/font-awesome.min.css';
 import logo from '../../../image/booksIcon.jpg'
 import style from '../../../styles/Admin/Navbar.module.css'
 import $ from 'jquery'
+import {connect} from 'react-redux'
+import {login, logout} from '../../../redux/actions/auth'
 function NavbarPage(props){
         const [isOpen, setIsOpen] = useState(false);
         const toggle = () => setIsOpen(!isOpen);
@@ -62,5 +64,9 @@ function NavbarPage(props){
         )
     }
 
-
-export default NavbarPage
+const mapStateToProps = (state) => ({
+    auth: state.auth
+})
+const mapDispatchToProp = {login, logout}
+      
+export default connect(mapStateToProps, mapDispatchToProp)(NavbarPage)

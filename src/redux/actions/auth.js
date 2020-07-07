@@ -11,3 +11,10 @@ export const login = (data) => ({
             }
         })
 })
+
+
+export let logout = data => {
+    return{
+        type: 'LOGOUT'
+    }
+}

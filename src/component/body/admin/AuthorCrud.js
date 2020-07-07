@@ -10,16 +10,20 @@ import {crud} from '../../../redux/actions/crud'
 import {connect} from 'react-redux'
 function AuthorCrud(props){
     console.log(props);
-    
-    useEffect(() => {
-        props.crud(process.env.REACT_APP_URL)
-    }, [])
 
     const {
         buttonLabel,
         className
       } = props;
-      
+
+// =============================================================================
+// Use effect => Component did mount hooks version
+    useEffect(() => {
+        props.crud(process.env.REACT_APP_URL)
+    }, [])
+
+// =============================================================================
+// state
       let [isLoading, setIsLoading] = useState(true)
       let [modal, setModal] = useState(false);
       let toggle = () => setModal(!modal);
@@ -28,18 +32,9 @@ function AuthorCrud(props){
       let [id, setId] = useState()
       let [modalTitle, setModalTitle] = useState('Add Author')
       let [profileAuthor, setProfileAuthor] =useState('')
-
-      useEffect(() => {
-        setIsLoading(props.crud.isLoading)
-      }, [])
-      if (isLoading) {
-        console.log('masih loading');
-      }else{
-          console.log(props.crud);
-          
-      }
       
-      
+// =============================================================================
+// state
       let DeleteAuthor = (id) => (event) =>{
         event.preventDefault()
         Swal.fire({
@@ -67,6 +62,9 @@ function AuthorCrud(props){
           })
       }
 
+// =============================================================================
+// funtion for handle action author and update author 
+
       let ActionAuthor = (event) => {
         event.preventDefault()
         let ConUrl = modalTitle == 'Add Author' ? `${process.env.REACT_APP_URL}books/author` : `${process.env.REACT_APP_URL}books/author/${id}`
@@ -92,6 +90,9 @@ function AuthorCrud(props){
         })
       }
 
+// =============================================================================
+// funtion for handle show author by ID
+
       let showAuthor = (id) => (event) =>{
           event.preventDefault()
           axios({
@@ -107,6 +108,9 @@ function AuthorCrud(props){
           })
       }
 
+// =============================================================================
+// funtion for set state to default
+
       let close = () => {
         setModal(false)
         setNameAuthor('')
@@ -115,7 +119,9 @@ function AuthorCrud(props){
 
     return(
         <>
-            {/* modal */}
+{/* ==================================================================================== */}
+{/* modal for process action Add Data and Update Data */}
+
             <Modal isOpen={modal} toggle={toggle} className={className}>
                 <form onSubmit={ActionAuthor}>
                 <ModalHeader toggle={toggle}>{modalTitle}</ModalHeader>
@@ -142,20 +148,21 @@ function AuthorCrud(props){
             </Modal>
 
 
-            {/* card */}
+{/* ===================================================================================== */}
+{/* Table */}
     
                 <Row noGutters>
-                <Col md='12' xs='12'>
-                <Card body className={style.CardTable}>
+                    <Col md='12' xs='12'>
+                    <Card body className={style.CardTable}>
                 <Row>
-                 <Col md='6'>
-                    <Button  onClick={toggle} color="primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Author
-                    </Button>
-                </Col>
+                    <Col md='6'>
+                        <Button  onClick={toggle} color="primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Author
+                        </Button>
+                    </Col>
 
-                <Col md='6'>
-                    <Input className={style.Search} type="text"  placeholder="Search" />
-                </Col>
+                    <Col md='6'>
+                        <Input className={style.Search} type="text"  placeholder="Search" />
+                    </Col>
                 </Row>
                     <Table hover className={style.Table}>
                         <thead>

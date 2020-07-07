@@ -29,6 +29,14 @@ let auth = (state = initialState, action) =>{
             isError: false,
             data: action.payload.data.data[0]
         }
+        case "LOGOUT":
+            
+        return {
+            ...state,
+            isLoading: false,
+            isError: false,
+            data: {}
+        }
         default: {
             return state
         }
