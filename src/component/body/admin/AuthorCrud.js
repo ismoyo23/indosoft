@@ -6,11 +6,11 @@ import {Input,Table, Container, Row,Col, Card, Button, CardImg, CardTitle, CardT
 import style from '../../../styles/Admin/Body.module.css'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import {crud} from '../../../redux/actions/crud'
+import {authorGet, addData, removeData, showID} from '../../../redux/actions/author'
 import {connect} from 'react-redux'
 function AuthorCrud(props){
     console.log(props);
-
+    
     const {
         buttonLabel,
         className
@@ -18,23 +18,22 @@ function AuthorCrud(props){
 
 // =============================================================================
 // Use effect => Component did mount hooks version
+// process get All
     useEffect(() => {
-        props.crud(process.env.REACT_APP_URL)
+        props.authorGet(process.env.REACT_APP_URL)
     }, [])
 
 // =============================================================================
 // state
-      let [isLoading, setIsLoading] = useState(true)
       let [modal, setModal] = useState(false);
       let toggle = () => setModal(!modal);
       let [nameAuthor, setNameAuthor] = useState('')
-      let [author, setAuthor] =useState([])
       let [id, setId] = useState()
       let [modalTitle, setModalTitle] = useState('Add Author')
       let [profileAuthor, setProfileAuthor] =useState('')
       
 // =============================================================================
-// state
+// function for delete data
       let DeleteAuthor = (id) => (event) =>{
         event.preventDefault()
         Swal.fire({
@@ -47,16 +46,23 @@ function AuthorCrud(props){
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.value) {
-                axios({
-                    method: 'DELETE',
-                    url: `${process.env.REACT_APP_URL}books/author/${id}`
-                })
-                .then((response) => {
+                let data = {
+                    'ConUrl': process.env.REACT_APP_URL,
+                    'id': id
+                }
+                // =================//
+                // axios delete data to api
+                props.removeData(data)
+                .then(() => {
                   Swal.fire(
                       'Deleted!',
                       'Your file has been deleted.',
                       'success'
                     )
+                })
+                .catch((error) => {
+                    console.log(error);
+                    
                 })
             }
           })
@@ -66,27 +72,25 @@ function AuthorCrud(props){
 // funtion for handle action author and update author 
 
       let ActionAuthor = (event) => {
-        event.preventDefault()
-        let ConUrl = modalTitle == 'Add Author' ? `${process.env.REACT_APP_URL}books/author` : `${process.env.REACT_APP_URL}books/author/${id}`
-        let Method = modalTitle == 'Add Author' ? 'POST' : 'PUT'
-        axios({
-            method: Method,
-            url: ConUrl,
-            data: {
-                'name_author': nameAuthor,
-                'profile_author': profileAuthor
-            }
-        })
-        .then((response) => {
+        event.preventDefault() 
+        let data = {
+            // ===========================//
+            // set url and method for add and udapte data
+            'ConUrl': modalTitle == 'Add Author' ? `${process.env.REACT_APP_URL}books/author` : `${process.env.REACT_APP_URL}books/author/${id}`,
+            'Method': modalTitle == 'Add Author' ? 'POST' : 'PUT',
+
+            // ===========================//
+            // Call value from state
+            'name_author': nameAuthor,
+            'profile_author': profileAuthor
+        }
+        props.addData(data)
+        .then(() => {
             Swal.fire(
                 'Success!',
                 `${modalTitle} success`,
                 'success'
               )
-        })
-        .catch((error)=>{
-            console.log(error);
-            
         })
       }
 
@@ -95,14 +99,16 @@ function AuthorCrud(props){
 
       let showAuthor = (id) => (event) =>{
           event.preventDefault()
-          axios({
-              methot: 'GET',
-              url: `${process.env.REACT_APP_URL}books/author?field=id_author&search=${id}`
-          })
-          .then((response) => {
+          let data = {
+              'ConUrl': process.env.REACT_APP_URL,
+              'id': id
+          }
+          props.showID(data)
+          .then((props) => {
+              let data = props.action.payload.data.data[0]
               setModal(true)
-              setNameAuthor(response.data.data[0].name_author)
-              setProfileAuthor(response.data.data[0].profile_author)
+              setNameAuthor(data.name_author)
+              setProfileAuthor(data.profile_author)
               setModalTitle('Edit Author')
               setId(id)
           })
@@ -173,7 +179,7 @@ function AuthorCrud(props){
                             </tr>
                         </thead>
                         <tbody>
-                            {author.map((author,key)=> {
+                            {props.crudState.data.map((author,key)=> {
                                 return(
                             <tr>
                                 <td>{key + 1}</td>
@@ -198,8 +204,9 @@ function AuthorCrud(props){
 }
 
 const mapStateToProps = (state) => ({
-    crud: state.crud
+    crudState: state.authorGet,
+    showData: state.showID
   })
-  const mapDispatchToProp = {crud}
+  const mapDispatchToProp = {authorGet, addData, removeData, showID}
   
 export default connect(mapStateToProps, mapDispatchToProp)(AuthorCrud)

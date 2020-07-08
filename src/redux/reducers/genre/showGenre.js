@@ -1,30 +1,32 @@
+import { showData } from "../../actions/author"
+
 let initialState = {
     isLoading: false,
     isError: false,
     errorMsg: "",
-    data: {}
+    data: []
 }
 
-let crud = (state = initialState, action) => { 
+let showGenre = (state = initialState, action) => { 
     switch (action.type) {
-        case 'RECEIVE_DATA_PENDING':
+        case 'SHOW_GENRE_PENDING':
         return{
             ...state,
             isLoading: true,
             isError: false
         }
-        case 'RECEIVE_DATA_REJECTED':
+        case 'SHOW_GENRE_REJECTED':
         return{
             ...state,
-            isLoading: true,
-            isError: false
+            isLoading: false,
+            isError: true
         }
-        case 'RECEIVE_DATA_FULFILLED':
+        case 'SHOW_GENRE_FULFILLED':
             return{
                 ...state,
-                isLoading: true,
-                isError: true,
-                data: action.payload.data.data
+                isLoading: false,
+                isError: false,
+                data: action
             }
             default: {
                 return state
@@ -32,4 +34,4 @@ let crud = (state = initialState, action) => {
     }
 }
 
-export default crud
+export default showGenre

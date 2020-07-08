@@ -9,8 +9,13 @@ import FormData from 'form-data'
 import {connect} from 'react-redux'
 import {login} from '../../../redux/actions/auth'
 import ReactLiveSearch from 'react-live-search'
+import {booksGet} from '../../../redux/actions/books'
 
 function BooksCrud(props){
+    console.log('props');
+    console.log(props);
+
+
     let [allBooks, setAllBooks] = useState([])
     let [allAuthor, setAllAuthor] = useState([])
     let [allGenre, setAllGenre] = useState([])
@@ -41,6 +46,13 @@ function BooksCrud(props){
 
     let [search, setSearch] = useState('')
     
+    let getAllBooks = () => {
+        let data = {
+            'SearchBooks': search === '' ? '' : `?search=${search}&field=title`,
+            'ConUrl': process.env.REACT_APP_URL
+        }
+        props.booksGet(data)
+    }
 
     // get data All Author
     let getAllAuthor = () => {
@@ -158,19 +170,7 @@ function BooksCrud(props){
         
     }
 
-    let getAllBooks = async () => {
-        let SearchBooks = search === '' ? '' : `?search=${search}&field=title`
-        await axios({
-            method: 'GET',
-            url: `${process.env.REACT_APP_URL}books/` + SearchBooks,
-        })
-        .then((response) => {
-            setAllBooks(response.data.data)
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
-    }
+
 
     let CloseModal = () =>{
             setModal(false)
@@ -279,7 +279,7 @@ function BooksCrud(props){
                             </tr>
                         </thead>
                         <tbody>
-                        {allBooks.map((allBooks) => {
+                        {props.booksCrud.data.map((allBooks) => {
                             return(
                                 <tr>
                                 <td>{allBooks.title}</td>
@@ -308,8 +308,9 @@ function BooksCrud(props){
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth
+    auth: state.auth,
+    booksCrud: state.booksGet
   })
-  const mapDispatchToProp = {login}
+  const mapDispatchToProp = {login, booksGet}
   
   export default connect(mapStateToProps, mapDispatchToProp)(BooksCrud)

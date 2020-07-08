@@ -5,43 +5,58 @@ import {Input,Table, Container, Row,Col, Card, Button, CardImg, CardTitle, CardT
 import style from '../../../styles/Admin/Body.module.css'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import {genreGet, actionGenre, deleteGenre, showGenre} from '../../../redux/actions/genre'
+import {connect} from 'react-redux'
 function GenreCrud(props){
+    console.log(props);
+    
     const {
         buttonLabel,
         className
       } = props;
 
+//=======================================================================================
+// component did mount
       useEffect(() => {
         GetAllGenre()
       }, [])
 
+//=======================================================================================
+// Component did update
       useEffect(() => {
-          if (search != '') {
+        //======================//
+        // if state search == null
+        if (search != '') {
             GetAllGenre()
           }
       })
-    
+
+//=======================================================================================
+// State
       const [modal, setModal] = useState(false);
       const toggle = () => setModal(!modal);
       let [nameGenre, setNameGenre] = useState('')
-      let [genre, setGenre] = useState([])
       let [id, setId] = useState()
       let [modalTitle, setModalTitle] = useState('Add Genre')
       let [search, setSearch] = useState('')
+
       
+//=======================================================================================
+// process add and update data
       let ActionGenre = (event) => {
         event.preventDefault()
-        let ConUrl = modalTitle == 'Add Genre' ? `${process.env.REACT_APP_URL}books/genre` : `${process.env.REACT_APP_URL}books/genre/${id}`
-        let Method = modalTitle == 'Add Genre' ? `POST` : `PUT`
-        
-        axios({
-            method: Method,
-            url: ConUrl,
-            data: {
-                'name_genre': nameGenre
-            }
-        })
-        .then((response) => {
+        let data = {
+            // ========================================//
+            // url and method
+            'ConUrl': modalTitle == 'Add Genre' ? `${process.env.REACT_APP_URL}books/genre` : `${process.env.REACT_APP_URL}books/genre/${id}`,
+            'Method': modalTitle == 'Add Genre' ? `POST` : `PUT`,
+            // =======================================//
+            // Call value from state
+            'name_genre': nameGenre
+        }
+
+        props.actionGenre(data)
+        .then(() => {
             Swal.fire(
                 'Success!',
                 `${modalTitle} success`,
@@ -51,29 +66,30 @@ function GenreCrud(props){
         })
     }
 
-    // get data
-    let GetAllGenre = async () => {
-        let Search = search == '' ? '' : `/?field=name_genre&search=${search}`
-        await axios({
-            method: 'GET',
-            url: `${process.env.REACT_APP_URL}books/genre${Search}`
-        })
-        .then((response) => {            
-            setGenre(response.data.data)
-        })
-  
+//=======================================================================================
+// process call data from api back end
+    let GetAllGenre = () => {
+        let data = {
+            'Search': search == '' ? '' : `/?field=name_genre&search=${search}`,
+            'ConUrl': process.env.REACT_APP_URL
+        }
+        props.genreGet(data)
     }
 
+//=======================================================================================
+// process show data genre by id
     let ShowGenre = (id) => (event)=>{
         event.preventDefault()
-        axios({
-            method: 'GET',
-            url: `${process.env.REACT_APP_URL}books/genre/?field=name_genre&search=${id}`
-        })
-        .then((response) => {
+        let data = {
+            'ConUrl': process.env.REACT_APP_URL,
+            'id': id
+        }
+        props.showGenre(data)
+        .then((props) => {
+            let data = props.action.payload.data.data[0]
             setId(id)
             setModal(true)
-            setNameGenre(response.data.data[0].name_genre)
+            setNameGenre(data.name_genre)
             setModalTitle('Edit Genre')     
         })
         .catch((error) => {
@@ -82,6 +98,8 @@ function GenreCrud(props){
         })
     }
 
+//=======================================================================================
+// process delete data
     let DeleteGenre = (id) => (event) => {
         event.preventDefault()
 
@@ -95,11 +113,12 @@ function GenreCrud(props){
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.value) {
-                axios({
-                    method: 'DELETE',
-                    url: `${process.env.REACT_APP_URL}books/genre/${id}`
-                })
-                .then((response) => {
+                let data = {
+                    'ConUrl': process.env.REACT_APP_URL,
+                    'id': id
+                }
+                props.deleteGenre(data)
+                .then(() => {
                     Swal.fire(
                         'Success!',
                         `Delete success`,
@@ -110,6 +129,8 @@ function GenreCrud(props){
           })
     }
 
+//=======================================================================================
+// set state to default
     let Close = () =>{
         setModalTitle('Add Genre')
         setModal(false)
@@ -117,7 +138,8 @@ function GenreCrud(props){
     }
     return(
         <>
-            {/* modal */}
+            {/* ======================================================= */}
+            {/* modal from add and update data*/}
             <Modal isOpen={modal} toggle={toggle} className={className}>
                 <form onSubmit={ActionGenre}>
                 <ModalHeader toggle={toggle}>{modalTitle}</ModalHeader>
@@ -137,8 +159,8 @@ function GenreCrud(props){
                 </form>
             </Modal>
 
-
-            {/* card */}
+            {/* ======================================================= */}
+            {/* table*/}
     
                 <Row noGutters>
                 <Col md='12' xs='12'>
@@ -162,7 +184,7 @@ function GenreCrud(props){
                             </tr>
                         </thead>
                         <tbody>
-                            {genre.map((genre, key) =>{
+                            {props.crudGenre.data.map((genre, key) =>{
                                 return(
                             <tr>
                                 <td scope="row">{key+1}</td>
@@ -186,4 +208,10 @@ function GenreCrud(props){
     )
 }
 
-export default GenreCrud
+const mapStateToProps = (state) => ({
+    crudGenre: state.genreGet,
+    showData: state.showGenre
+  })
+  const mapDispatchToProp = {genreGet, actionGenre, deleteGenre, showGenre}
+  
+export default connect(mapStateToProps, mapDispatchToProp)(GenreCrud)
