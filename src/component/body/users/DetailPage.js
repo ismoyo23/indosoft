@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react'
 import style from '../../../styles/Users/Detail.module.css'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
     Card, Button, CardImg, CardTitle, CardText, CardGroup,
     CardSubtitle, CardBody, Container, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter
   } from 'reactstrap';
-
+  import {connect} from 'react-redux'
+  import {login, logout} from '../../../redux/actions/auth'
 function ButtonMin(props){
     
     if(props.count <= 1){
@@ -22,6 +23,7 @@ function ButtonMin(props){
 }
 
 function ButtonPlus(props){
+
     if(props.count >= props.stok){
         return(
             <Button  outline color="success" className={style.ButtonPlus}>limit</Button>
@@ -34,7 +36,8 @@ function ButtonPlus(props){
     
 }
 function DetailPage(props){
-    let history = useHistory()
+    
+  let history = useHistory()
   let [count, setCount] = useState(1) 
   let [modal, setModal] = useState(false);
   let toggle = () => setModal(!modal);
@@ -49,7 +52,7 @@ function DetailPage(props){
         url: 'http://localhost:3000/books/borrower',
         data: {
           id_books: id,
-          id_user: idUser,
+          id_user: props.auth.data.id_user,
           status: status,
           count: count
         }
@@ -81,7 +84,7 @@ function DetailPage(props){
 
         <CardGroup>
             <Card>
-                <CardImg className={style.CardImg} src={`http://localhost:3000/${props.idBooks.image}`} alt="Card image cap" />
+                <CardImg className={style.CardImg} src={`${process.env.REACT_APP_URL}${props.idBooks.image}`} alt="Card image cap" />
                 <CardBody>
                 <Container>
                 <Row>
@@ -97,7 +100,7 @@ function DetailPage(props){
                         <CardText>{props.idBooks.discription}</CardText>
                     </Col>
                     <Col md='3'>
-                    <CardImg className={style.CardChild} src={`http://localhost:3000/${props.idBooks.image}`} alt="Card image cap" /><br/>
+                    <CardImg className={style.CardChild} src={`${process.env.REACT_APP_URL}${props.idBooks.image}`} alt="Card image cap" /><br/>
                         <ButtonPlus count={count} countPlus={() => setCount(count + 1)} stok={props.idBooks.stok}/>
                         <Button color="info" className={style.ButtonPlus}>{count}</Button>
                         <ButtonMin count={count} countMin={() => setCount(count - 1)}/>
@@ -116,4 +119,9 @@ function DetailPage(props){
     )
 }
 
-export default DetailPage
+const mapStateToProps = (state) => ({
+    auth: state.auth
+  })
+  const mapDispatchToProp = {login, logout}
+  
+  export default connect(mapStateToProps, mapDispatchToProp)(DetailPage)

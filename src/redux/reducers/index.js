@@ -20,8 +20,11 @@ import genreAction from './genre/genreAction'
 // import function from genre
 import booksGet from './books/booksGet'
 import actionBooks from './books/actionBooks'
-
+import deleteBooks from './books/deleteBooks'
+import showBooks from './books/showBooks'
 // ===========================================
+import borrowGet from './borrow/borrowGet';
+
 // export combine reducers
 export default combineReducers({
     // =========================================//
@@ -33,7 +36,12 @@ export default combineReducers({
     // ========================================//
     // export author // 
     genreGet, deleteGenre, showGenre, genreAction,
-    // ============ //
+    // ======================================= //
     // export books
-    booksGet, actionBooks
+    booksGet, actionBooks, deleteBooks, showBooks,
+
+    // ========================================//
+    // export borrow
+    borrowGet
+
 })

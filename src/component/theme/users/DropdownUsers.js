@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import style from '../../../styles/Users/Navbar.module.css'
 import axios from 'axios'
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
 import {connect} from 'react-redux'
 import {login, logout} from '../../../redux/actions/auth'

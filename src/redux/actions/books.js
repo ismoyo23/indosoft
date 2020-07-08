@@ -12,32 +12,32 @@ export let booksGet = (data) => ({
 
 // ==============================================
 // action Add data Author
-export let addData = (data) => ({
+export let addData = (data, form) => ({
     type: 'PROCESS_BOOKS',
     payload: axios({
         method: data.Method,
         url: data.ConUrl,
-        data: {
-            'name_author': data.name_author,
-            'profile_author': data.profile_author
-        }
+        data: form
     })
 })
 
 // ===============================================
 // action delete data author
-export let removeData = (data) => ({
+export let deleteBooks = (data) => ({
     type: 'DELETE_BOOKS',
-    payload: axios({
+    payload:  axios({
         method: 'DELETE',
-        url: `${data.ConUrl}books/author/${data.id}`
+        url: `${data.ConUrl}books/${data.id}`
     })
 })
 
-export let showID = (data) => ({
+
+/// ===============================================
+// action show data books by id
+export let showBooks = (data) => ({
     type: 'SHOW_BOOKS',
     payload: axios({
-        methot: 'GET',
-        url: `${data.ConUrl}books/author?field=id_author&search=${data.id}`
-    }) 
+        method: 'GET',
+        url: `${data.ConUrl}books/?search=${data.id}&field=id`
+    })
 })

@@ -1,28 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Swiper from 'react-id-swiper';
-import {Input,Table, Container, Row,Col, Card, Button, CardImg, CardTitle, CardText, CardDeck,
-    CardSubtitle, CardBody, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, FormText } from 'reactstrap';
+import {Input,Table, Row,Col, Card, Button} from 'reactstrap';
 import style from '../../../styles/Admin/Body.module.css'
+import {connect} from 'react-redux';
+import { borrowGet } from '../../../redux/actions/borrow'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 function Home(props){
+
     let [Borrowed, setBorrowed]= useState([])
-    let [id, setId] = useState()
     useEffect(() => {
         getBorrowed()
-       }, []);
+       }, [])
+
     let getBorrowed = () => {
-        axios({
-            method: 'GET',
-            url: 'http://localhost:3000/books/borrower'
-        })
-        .then((response) => {
-            console.log(response)
-            setBorrowed(response.data.data)
-        })
-        .catch((error)=>{
-            console.log(error)
+        props.borrowGet(process.env.REACT_API_URL)
+        .catch((error) => {
+            console.log(error);
+            
         })
     }
 
@@ -126,7 +121,7 @@ function Home(props){
                             </tr>
                         </thead>
                         <tbody>
-                        {Borrowed.map((borrow) => {
+                        {props.borrowCrud.data.map((borrow) => {
                                 return (
                             <tr>
                                 <td>{borrow.name_user}</td>
@@ -155,4 +150,9 @@ function Home(props){
     }
 
 
-export default Home
+    let mapStateToProps = (state) => ({
+        borrowCrud: state.borrowGet
+    })
+    const mapDispatchToProp = {borrowGet}
+        
+    export default connect(mapStateToProps, mapDispatchToProp)(Home)

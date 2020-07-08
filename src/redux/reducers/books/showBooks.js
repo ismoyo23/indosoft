@@ -2,24 +2,24 @@ let initialState = {
     isLoading: false,
     isError: false,
     errorMsg: "",
-    data: ''
+    data: []
 }
 
-let actionBooks = (state = initialState, action) => { 
+let showBooks = (state = initialState, action) => { 
     switch (action.type) {
-        case 'BOOKS_ACTION_PENDING':
+        case 'SHOW_BOOKS_PENDING':
         return{
             ...state,
             isLoading: true,
             isError: false
         }
-        case 'BOOKS_ACTION_REJECTED':
+        case 'SHOW_BOOKS_REJECTED':
         return{
             ...state,
             isLoading: false,
             isError: true
         }
-        case 'BOOKS_ACTION_FULFILLED':
+        case 'SHOW_BOOKS_FULFILLED':
             return{
                 ...state,
                 isLoading: false,
@@ -32,4 +32,4 @@ let actionBooks = (state = initialState, action) => {
     }
 }
 
-export default actionBooks
+export default showBooks
