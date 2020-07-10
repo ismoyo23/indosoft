@@ -194,3 +194,15 @@
 .ModalRegister{
     background-color: rgb(62, 89, 129) !important;
 }
+
+.ImgSlide{
+    width: 100%;
+    height: 340px;
+}
+
+@media only screen and (max-width: 600px) {
+    .ImgSlide{
+        width: 100%;
+        height: 260px;
+    }
+}

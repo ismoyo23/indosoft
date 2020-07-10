@@ -36,7 +36,7 @@ function NavbarPage(props){
     let getAllGenre = () => {
       axios({
           method: 'GET',
-          url: 'http://localhost:3000/books/genre/',
+          url: `${process.env.REACT_APP_URL}books/genre/`,
       })
       .then((response) => {
           setAllGenre(response.data.data)
@@ -122,5 +122,3 @@ function NavbarPage(props){
 }
 
 export default NavbarPage
-
-// value={props.ValGenre} onChange={(e) => props.genre(e.target.value)}

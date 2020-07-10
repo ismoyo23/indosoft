@@ -24,6 +24,7 @@ import deleteBooks from './books/deleteBooks'
 import showBooks from './books/showBooks'
 // ===========================================
 import borrowGet from './borrow/borrowGet';
+import borrowAction from './borrow/borrowAction'
 
 // export combine reducers
 export default combineReducers({
@@ -42,6 +43,6 @@ export default combineReducers({
 
     // ========================================//
     // export borrow
-    borrowGet
+    borrowGet, borrowAction
 
 })

@@ -17,8 +17,8 @@ let auth = (state = initialState, action) =>{
         case "LOGIN_REJECTED":
         return {
             ...state,
-            isLoading: true,
-            isError: false,
+            isLoading: false,
+            isError: true,
             errorMsg: 'Data Rejected'
         }
         case "LOGIN_FULFILLED":

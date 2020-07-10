@@ -20,12 +20,6 @@ import {booksGet, addData, deleteBooks, showBooks} from '../../../redux/actions/
 import { authorGet } from "../../../redux/actions/author";
 import { genreGet } from '../../../redux/actions/genre'
 function BooksCrud(props){
-    console.log('props');
-    
-    console.log(props);
-    
-    let [allAuthor, setAllAuthor] = useState([])
-    let [allGenre, setAllGenre] = useState([])
     useEffect(() => {
         getAllAuthor()
         getAllGenre()
@@ -173,7 +167,7 @@ function BooksCrud(props){
         // =============================================//
         // action add data and update data
         props.addData(data, formData)
-        .then((response) => {
+        .then(() => {
             Swal.fire({
                 title: 'Success',
                 text: `${modalTitle} success`,

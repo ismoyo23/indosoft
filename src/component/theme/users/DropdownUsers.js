@@ -5,13 +5,14 @@ import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
 import {connect} from 'react-redux'
 import {login, logout} from '../../../redux/actions/auth'
+import $ from 'jquery'
 
 import {
     NavItem,
     NavLink,
     Card, Button, Row, Col, Input,
     
-    Modal,ModalBody, FormGroup
+    Modal,ModalBody, FormGroup, Alert
   } from 'reactstrap';
 import { ActionType } from 'redux-promise-middleware';
 
@@ -48,24 +49,42 @@ function UserBeforeLogin(props){
           password: password,
           env: process.env.REACT_APP_URL
         }
+        if(data.username.length === 0 && data.password.length === 0 ){
+          $('.alert').html('<div class="alert alert-danger" role="alert">form is required</div>')
+          console.log('validate');
+          
+        }
+        else{
         props.login(data)
         .then((props)=>{
           if (props.action.payload.data.data[0].role == 0) {
-            history.push('/')
+            window.location.reload()
           }else{
-            history.push('/admin')
+            Swal.fire({
+              title: 'Success',
+              text: "Login Success",
+              icon: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Ok'
+            }).then((result) => {
+              if (result.value) {
+                history.push('/admin')
+              }
+            })
           }
-          
-          
         })
+      }
       }
 
 // =========================================================
 // Handle Register 
       let HandleRegister = (event) => {
         event.preventDefault()
-
+        if (username.length == 0 || password.length == 0, email.length == 0, address.length == 0) {
+          $('.alert-register').html('<div class="alert alert-danger" role="alert">form is required</div>')
+        }else{
         axios({
+          
           method: 'POST',
           url: `${process.env.REACT_APP_URL}books/register`,
           data: {
@@ -92,6 +111,7 @@ function UserBeforeLogin(props){
       .catch((error) =>{
           console.log(error)
       })
+    }
       }
 // =========================================================
 // Set Icon User with conditions
@@ -152,12 +172,13 @@ function UserBeforeLogin(props){
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
                 <p className={style.TextHeader}>Login</p>
+                <div className='alert'></div>
             <form onSubmit={HandleLogin}>
               <FormGroup>
-                  <Input onChange={(e) => setUsername(e.target.value)} value={username} className={style.InputMedia} type="text" name="email" id="exampleEmail" placeholder="Username" />
+                  <Input onChange={(e) => setUsername(e.target.value)} value={username} className={`${style.InputMedia} username`} type="text" name="email" id="exampleEmail" placeholder="Username" />
               </FormGroup>
               <FormGroup>
-                  <Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className={style.InputMedia} name="email" id="exampleEmail" placeholder="Password" />
+                  <Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className={`${style.InputMedia} password`} name="email" id="exampleEmail" placeholder="Password" />
               </FormGroup>
 
               <Button style={{width: '100%'}} color="primary">Login</Button>
@@ -173,6 +194,7 @@ function UserBeforeLogin(props){
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
                 <p className={style.TextHeader}>Register</p>
+          <div className='alert-register'></div>
           <form onSubmit={HandleRegister}>
             <FormGroup>
                 <Input value={username} onChange={(e) => setUsername(e.target.value)}  className={style.InputMedia} type="text" id="exampleEmail" placeholder="Username" />

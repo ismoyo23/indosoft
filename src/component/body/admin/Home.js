@@ -3,12 +3,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Input,Table, Row,Col, Card, Button} from 'reactstrap';
 import style from '../../../styles/Admin/Body.module.css'
 import {connect} from 'react-redux';
-import { borrowGet } from '../../../redux/actions/borrow'
+import { borrowGet, borrowAction } from '../../../redux/actions/borrow'
+import {login} from '../../../redux/actions/auth'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 function Home(props){
-
-    let [Borrowed, setBorrowed]= useState([])
+    
     useEffect(() => {
         getBorrowed()
        }, [])
@@ -33,15 +33,13 @@ function Home(props){
             confirmButtonText: 'Yes'
           }).then((result) => {
             if (result.value) {
-                let token = localStorage.getItem('token')
-                axios({
-                    method: 'DELETE',
-                    url: `http://localhost:3000/books/borrower/${id}`,
-                    headers : {
-                        Authorization : token
-                    }
-                })
-                .then((response) => {
+                let data = {
+                    'ConUrl': process.env.REACT_APP_URL,
+                    'id': id
+                }
+
+                props.borrowAction(data)
+                .then(() => {
                     Swal.fire({
                         title: 'Success',
                         text: "You won't be able to revert this!",
@@ -50,7 +48,7 @@ function Home(props){
                         confirmButtonText: 'Yes'
                       }).then((result) => {
                         if (result.value) {
-                            window. location. reload()
+                            window.location.reload()
                         }
                       })
                 })
@@ -112,7 +110,7 @@ function Home(props){
                     <Table hover className={style.Table}>
                         <thead>
                             <tr>
-                             
+                                <th>No</th>
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Title Books</th>
@@ -121,9 +119,10 @@ function Home(props){
                             </tr>
                         </thead>
                         <tbody>
-                        {props.borrowCrud.data.map((borrow) => {
+                        {props.borrowCrud.data.map((borrow, key) => {
                                 return (
                             <tr>
+                                <td>{key+1}</td>
                                 <td>{borrow.name_user}</td>
                                 <td>{borrow.email}</td>
                                 <td>{borrow.title}</td>
@@ -151,8 +150,9 @@ function Home(props){
 
 
     let mapStateToProps = (state) => ({
-        borrowCrud: state.borrowGet
+        borrowCrud: state.borrowGet,
+        auth: state.auth
     })
-    const mapDispatchToProp = {borrowGet}
+    const mapDispatchToProp = {borrowGet, login, borrowAction}
         
     export default connect(mapStateToProps, mapDispatchToProp)(Home)

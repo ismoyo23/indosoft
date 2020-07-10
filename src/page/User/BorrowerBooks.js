@@ -3,7 +3,9 @@ import Navbar from '../../component/theme/users/NavbarPage'
 import BorrowedPage from '../../component/body/users/BorrowerPage'
 import axios from 'axios'
 import {Row, Container} from 'reactstrap'
-function BorrowerBooks(){
+import {connect} from 'react-redux'
+import {login, logout} from '../../redux/actions/auth'
+function BorrowerBooks(props){
 
     let [Borrowed, setBorrowed]= useState([])
 
@@ -14,7 +16,7 @@ function BorrowerBooks(){
     let getNameBorrowed = () => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3000/books/borrower?field=name_user&search='+ localStorage.getItem('name_user')
+            url: 'http://localhost:3000/books/borrower?field=name_user&search='+ props.auth.data.name_user
         })
         .then((response) => {
             console.log(response)
@@ -39,4 +41,9 @@ function BorrowerBooks(){
     )
 }
 
-export default BorrowerBooks
+const mapStateToProps = (state) => ({
+    auth: state.auth
+  })
+  const mapDispatchToProp = {login, logout}
+  
+  export default connect(mapStateToProps, mapDispatchToProp)(BorrowerBooks)
