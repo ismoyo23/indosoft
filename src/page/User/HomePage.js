@@ -6,15 +6,23 @@ import SlideCard from "../../component/body/users/SlideCard";
 import SlideShow from "../../component/body/users/SlideShow";
 import PaginationPage from "../../component/body/users/PaginationPage";
 import axios from "axios";
-import { Row, Container } from "reactstrap";
+import { useHistory } from "react-router-dom";
+import {
+  Row,
+  Container,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+} from "reactstrap";
 function HomeUsers(props) {
+  let history = useHistory();
   // ==========================================================================
   // state
   let [allBooks, setAllBooks] = useState([]);
   let [Search, setSearch] = useState("");
   let [Genre, SetGenre] = useState("");
   let [sort, setSort] = useState("");
-
+  let [page, setPage] = useState("");
   // ==========================================================================
   // Componenet did Mount Hooks version
   useEffect(() => {
@@ -30,23 +38,39 @@ function HomeUsers(props) {
       getAllBooks();
     } else if (sort == "DESC") {
       getAllBooks();
+    } else if (page != "") {
+      getAllBooks();
     }
   });
   // =============================================================================
+  // funtion for push param pagination
+  let paginationBooks = (event) => {
+    event.preventDefault();
+    setPage("2");
+    console.log("ok");
+  };
+  // =============================================================================
   //funtion for call data books
-  let getAllBooks = () => {
+  let getAllBooks = async () => {
     let SearchBooks = Search === "" ? "" : `&search=${Search}&field=title`;
     let genre =
       Genre === "" ? "" : `&search=${Genre}&field=book_detail.id_genre`;
     let SortBooks = sort === "ASC" ? `/?sort=${sort}` : `/?sort=${sort}`;
-
-    axios({
+    let pageBooks = page === "" ? `&page=1` : `&page=1${page}`;
+    await axios({
       method: "GET",
-      url: `http://localhost:3000/books${SortBooks}${SearchBooks}${genre}`,
+      url: `http://localhost:3000/books${SortBooks}${pageBooks}${SearchBooks}${genre}`,
     }).then((response) => {
       setAllBooks(response.data.data);
     });
   };
+
+  // ================================================================================
+  // for value pagination
+  let pagination = [];
+  for (let i = 1; i <= allBooks.length / 6; i++) {
+    pagination.push([i]);
+  }
 
   return (
     <>
@@ -81,7 +105,26 @@ function HomeUsers(props) {
       {/* =============================================================== */}
       {/* Pagination Component */}
       <Container style={{ marginTop: "30px" }}>
-        <PaginationPage />
+        <Pagination
+          className="d-flex justify-content-center"
+          aria-label="Page navigation example"
+        >
+          <PaginationItem>
+            <PaginationLink />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink previous href="#" />
+          </PaginationItem>
+          {pagination.map((page) => {
+            return <PaginationPage pageBooks={paginationBooks} data={page} />;
+          })}
+          <PaginationItem>
+            <PaginationLink next href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink last href="#" />
+          </PaginationItem>
+        </Pagination>
       </Container>
     </>
   );

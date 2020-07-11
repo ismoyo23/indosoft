@@ -4,21 +4,7 @@ import "font-awesome/css/font-awesome.min.css";
 import img6 from "../../../image/image.jpg";
 import "swiper/css/swiper.css";
 import { Link } from "react-router-dom";
-import {
-  Card,
-  Button,
-  Row,
-  Col,
-  Input,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-} from "reactstrap";
+import { Card, Button, Col, CardText, CardBody, CardTitle } from "reactstrap";
 
 function HomePage(props) {
   let params = {
@@ -35,15 +21,6 @@ function HomePage(props) {
     },
   };
 
-  let bookSlide = {
-    slidesPerView: 5,
-    spaceBetween: 11,
-    freeMode: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-  };
   return (
     <>
       {/* list books */}
