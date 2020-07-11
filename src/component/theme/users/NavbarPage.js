@@ -5,6 +5,8 @@ import "swiper/css/swiper.css";
 import UserBeforeLogin from "./DropdownUsers";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import "font-awesome/css/font-awesome.min.css";
+import { useHistory } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -13,25 +15,22 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   NavbarText,
   Container,
-  Card,
-  Button,
-  Row,
-  Col,
   Input,
   FormGroup,
-  Label,
+  InputGroup,
+  InputGroupAddon,
+  Button,
 } from "reactstrap";
 
 function NavbarPage(props) {
+  let history = useHistory();
+
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   let [allGenre, setAllGenre] = useState([]);
+  let [search, setSearch] = useState("");
 
   useEffect(() => {
     getAllGenre();
@@ -50,6 +49,11 @@ function NavbarPage(props) {
       });
   };
 
+  let handleSearch = (event) => {
+    event.preventDefault();
+    history.push(`/search/${search}`);
+  };
+
   return (
     <>
       <Navbar light className={style.NavBar} expand="md">
@@ -65,12 +69,21 @@ function NavbarPage(props) {
                 <UserBeforeLogin />
 
                 <NavItem>
-                  <Input
-                    value={props.value}
-                    onChange={props.Search}
-                    id="exampleEmail"
-                    placeholder="Search..."
-                  />
+                  <form onSubmit={handleSearch}>
+                    <InputGroup onSubmit={handleSearch}>
+                      <Input
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Search.."
+                        style={{ width: "180px" }}
+                      />
+                      <InputGroupAddon addonType="append">
+                        <Button color="light">
+                          <i class="fa fa-search" aria-hidden="true"></i>
+                        </Button>
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </form>
                 </NavItem>
               </Nav>
             </NavbarText>
