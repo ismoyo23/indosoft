@@ -20,6 +20,7 @@ function App() {
           <Route path="/search/:name" component={SearchBooks} />
           <Route path="/category/:category" component={Users} />
           <Route path="/sort/:sort" component={Users} />
+          <Route path="/page/:page" component={Users} />
           {/* Route Admin */}
           <Route path="/admin" component={Admin} />
           <Route path="/books" component={CrudBooks} />

@@ -15,7 +15,7 @@ import {
   PaginationLink,
 } from "reactstrap";
 function HomeUsers(props) {
-  let history = useHistory();
+  console.log(props);
   // ==========================================================================
   // state
   let [allBooks, setAllBooks] = useState([]);
@@ -59,7 +59,10 @@ function HomeUsers(props) {
         : `&search=${props.match.params.category}&field=genre.name_genre`;
     let SortBooks =
       props.match.params.sort == undefined ? `/?sort=ASC` : `/?sort=DESC`;
-    let pageBooks = page === "" ? `&page=1` : `&page=1${page}`;
+    let pageBooks =
+      props.match.params.page == undefined
+        ? `&page=1`
+        : `&page=1${props.match.params.page}`;
     await axios({
       method: "GET",
       url: `${process.env.REACT_APP_URL}books${SortBooks}${pageBooks}${SearchBooks}${genre}`,
@@ -115,9 +118,6 @@ function HomeUsers(props) {
           aria-label="Page navigation example"
         >
           <PaginationItem>
-            <PaginationLink />
-          </PaginationItem>
-          <PaginationItem>
             <PaginationLink previous href="#" />
           </PaginationItem>
           {pagination.map((page) => {
@@ -125,9 +125,6 @@ function HomeUsers(props) {
           })}
           <PaginationItem>
             <PaginationLink next href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink last href="#" />
           </PaginationItem>
         </Pagination>
       </Container>

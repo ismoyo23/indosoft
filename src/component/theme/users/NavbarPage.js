@@ -20,7 +20,6 @@ import {
   NavbarText,
   Container,
   Input,
-  FormGroup,
   InputGroup,
   InputGroupAddon,
   Button,
@@ -35,11 +34,9 @@ function NavbarPage(props) {
   let history = useHistory();
   let toggleNavbar = () => setIsOpen(!isOpen);
   let [isOpen, setIsOpen] = useState(false);
-  let [allGenre, setAllGenre] = useState([]);
   let [search, setSearch] = useState("");
   let [dropdownOpen, setDropdownOpen] = useState(false);
   let toggle = () => setDropdownOpen(!dropdownOpen);
-  let [category, setCategory] = useState("");
 
   useEffect(() => {
     getAllGenre();
