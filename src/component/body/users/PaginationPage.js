@@ -6,8 +6,13 @@ function PaginationPage(props) {
   let history = useHistory();
   let handlePagination = (page) => (event) => {
     event.preventDefault();
-    history.push(`/page/${page}`);
-    window.location.reload();
+    if (page > 1) {
+      history.push(`/page/${page}`);
+      window.location.reload();
+    } else {
+      history.push(`/`);
+      window.location.reload();
+    }
   };
   return (
     <>

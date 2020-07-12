@@ -73,8 +73,9 @@ function HomeUsers(props) {
 
   // ================================================================================
   // for value pagination
+  let pageSum = allBooks.length <= 12 ? 12 / 6 : allBooks.length;
   let pagination = [];
-  for (let i = 1; i <= allBooks.length / 6; i++) {
+  for (let i = 1; i <= pageSum; i++) {
     pagination.push([i]);
   }
 
