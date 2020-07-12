@@ -18,6 +18,8 @@ function App() {
           {/* Route User */}
           <Route path="/" exact component={Users} />
           <Route path="/search/:name" component={SearchBooks} />
+          <Route path="/category/:category" component={Users} />
+          <Route path="/sort/:sort" component={Users} />
           {/* Route Admin */}
           <Route path="/admin" component={Admin} />
           <Route path="/books" component={CrudBooks} />

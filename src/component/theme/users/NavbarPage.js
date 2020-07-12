@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "font-awesome/css/font-awesome.min.css";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { genreGet } from "../../../redux/actions/genre";
 import {
   Collapse,
   Navbar,
@@ -22,37 +24,64 @@ import {
   InputGroup,
   InputGroupAddon,
   Button,
+  Dropdown,
+  DropdownItem,
+  DropdownToggle,
+  DropdownMenu,
+  UncontrolledDropdown,
 } from "reactstrap";
 
 function NavbarPage(props) {
   let history = useHistory();
-
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
+  let toggleNavbar = () => setIsOpen(!isOpen);
+  let [isOpen, setIsOpen] = useState(false);
   let [allGenre, setAllGenre] = useState([]);
   let [search, setSearch] = useState("");
+  let [dropdownOpen, setDropdownOpen] = useState(false);
+  let toggle = () => setDropdownOpen(!dropdownOpen);
+  let [category, setCategory] = useState("");
 
   useEffect(() => {
     getAllGenre();
   }, []);
 
   let getAllGenre = () => {
-    axios({
-      method: "GET",
-      url: `${process.env.REACT_APP_URL}books/genre/`,
-    })
-      .then((response) => {
-        setAllGenre(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    let data = {
+      ConUrl: process.env.REACT_APP_URL,
+      Search: "",
+    };
+    props.genreGet(data);
   };
 
   let handleSearch = (event) => {
     event.preventDefault();
     history.push(`/search/${search}`);
+    window.location.reload();
   };
+
+  let handleCategory = (category) => (event) => {
+    event.preventDefault();
+    if (category == "All") {
+      history.push("/");
+      window.location.reload();
+    } else {
+      history.push(`/category/${category}`);
+      window.location.reload();
+    }
+  };
+
+  let handleSort = (sort) => (event) => {
+    event.preventDefault();
+    if (sort == "A-Z") {
+      history.push("/");
+      window.location.reload();
+    } else {
+      history.push(`sort/${sort}`);
+      window.location.reload();
+    }
+  };
+
+  let handle;
 
   return (
     <>
@@ -61,7 +90,7 @@ function NavbarPage(props) {
           <NavbarBrand className={style.NavBrand}>
             loyal book be your friend
           </NavbarBrand>
-          <NavbarToggler onClick={toggle} />
+          <NavbarToggler onClick={toggleNavbar} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar></Nav>
             <NavbarText>
@@ -109,37 +138,35 @@ function NavbarPage(props) {
                     <NavLink className={style.NavItem}>Home</NavLink>
                   </Link>
                 </NavItem>
-                <FormGroup style={{ width: "10px !important" }}>
-                  <Input
-                    value={props.ValGenre}
-                    onChange={(e) => props.genre(e.target.value)}
-                    type="select"
-                    name="select"
-                    id="exampleSelect"
-                  >
-                    <option value="">All</option>
-                    {allGenre.map((allGenre) => {
+                <Dropdown nav isOpen={dropdownOpen} toggle={toggle}>
+                  <DropdownToggle className={style.NavItem} nav caret>
+                    Category
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem header>
+                      <span onClick={handleCategory("All")}>All</span>
+                    </DropdownItem>
+                    {props.AllGenre.data.map((data) => {
                       return (
-                        <option value={allGenre.id_genre}>
-                          {allGenre.name_genre}
-                        </option>
+                        <DropdownItem header>
+                          <span onClick={handleCategory(data.name_genre)}>
+                            {data.name_genre}
+                          </span>
+                        </DropdownItem>
                       );
                     })}
-                  </Input>
-                </FormGroup>
+                  </DropdownMenu>
+                </Dropdown>
 
-                <FormGroup style={{ width: "10px !important" }}>
-                  <Input
-                    value={props.ValSort}
-                    onChange={(e) => props.sort(e.target.value)}
-                    type="select"
-                    name="select"
-                    id="exampleSelect"
-                  >
-                    <option value="ASC">A-Z</option>
-                    <option value="DESC">Z-A</option>
-                  </Input>
-                </FormGroup>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle className={style.NavItem} nav caret>
+                    Sort
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem onClick={handleSort("A-Z")}>A-Z</DropdownItem>
+                    <DropdownItem onClick={handleSort("Z-A")}>Z-A</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
 
                 <NavItem>
                   <Link to="/borowerbooks">
@@ -155,4 +182,9 @@ function NavbarPage(props) {
   );
 }
 
-export default NavbarPage;
+const mapStateToProps = (state) => ({
+  AllGenre: state.genreGet,
+});
+const mapDispatchToProp = { genreGet };
+
+export default connect(mapStateToProps, mapDispatchToProp)(NavbarPage);

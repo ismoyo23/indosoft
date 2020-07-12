@@ -54,12 +54,15 @@ function HomeUsers(props) {
   let getAllBooks = async () => {
     let SearchBooks = Search === "" ? "" : `&search=${Search}&field=title`;
     let genre =
-      Genre === "" ? "" : `&search=${Genre}&field=book_detail.id_genre`;
-    let SortBooks = sort === "ASC" ? `/?sort=${sort}` : `/?sort=${sort}`;
+      props.match.params.category == undefined
+        ? ""
+        : `&search=${props.match.params.category}&field=genre.name_genre`;
+    let SortBooks =
+      props.match.params.sort == undefined ? `/?sort=ASC` : `/?sort=DESC`;
     let pageBooks = page === "" ? `&page=1` : `&page=1${page}`;
     await axios({
       method: "GET",
-      url: `http://localhost:3000/books${SortBooks}${pageBooks}${SearchBooks}${genre}`,
+      url: `${process.env.REACT_APP_URL}books${SortBooks}${pageBooks}${SearchBooks}${genre}`,
     }).then((response) => {
       setAllBooks(response.data.data);
     });
@@ -94,7 +97,9 @@ function HomeUsers(props) {
       {/* =============================================================== */}
       {/* List Books */}
       <Container>
-        <header className={style.headerBooks}>List Books</header>
+        <header className={style.headerBooks}>
+          List Books {props.match.params.category}
+        </header>
         <Row>
           {allBooks.map((allBooks) => {
             return <HomePage allBooks={allBooks} />;
