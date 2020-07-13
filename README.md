@@ -8,7 +8,7 @@
 ![Twitter Follow](https://img.shields.io/twitter/follow/scottydocs?style=social)
 
 
-# dependencies
+# Dependencies
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "datatables.net": "^1.10.21",
@@ -36,3 +36,10 @@
 
 # ENV
 REACT_APP_URL=http://localhost:3000/
+
+# Feature
+ 1. Login register with role admin and user
+ 2. Stock reductions when borrowing books
+ 3. Responsive
+ 4. Search, sort and pagination
+ 5. Form validation
