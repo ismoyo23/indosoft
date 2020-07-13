@@ -59,4 +59,17 @@ REACT_APP_URL=http://localhost:3000/
    4. Mobile Version
    
    ![Screenshot from 2020-07-13 16-16-11](https://user-images.githubusercontent.com/63132957/87287365-382a1d00-c524-11ea-9e86-48c488c46d70.png)
+   
+   5. Admin page
+   
+   ![Screenshot from 2020-07-13 16-20-33](https://user-images.githubusercontent.com/63132957/87287886-d4ecba80-c524-11ea-8963-c57b77489310.png)
+    
+   6. Crud Books
+   
+   -Firts page
+   ![Screenshot from 2020-07-13 16-22-21](https://user-images.githubusercontent.com/63132957/87288157-2dbc5300-c525-11ea-94d7-5fe434afe78a.png)
+   
+   -Add data
+   ![Screenshot from 2020-07-13 16-22-15](https://user-images.githubusercontent.com/63132957/87288273-56dce380-c525-11ea-9a4d-1220103b8e3a.png)
+   
     
