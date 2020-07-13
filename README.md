@@ -72,4 +72,8 @@ REACT_APP_URL=http://localhost:3000/
    -Add data
    ![Screenshot from 2020-07-13 16-22-15](https://user-images.githubusercontent.com/63132957/87288273-56dce380-c525-11ea-9a4d-1220103b8e3a.png)
    
+    -Update Data
+    ![Screenshot from 2020-07-13 16-22-33](https://user-images.githubusercontent.com/63132957/87288455-8f7cbd00-c525-11ea-8162-1da34429aab2.png)
     
+    -Delete Data
+    ![Screenshot from 2020-07-13 16-22-41](https://user-images.githubusercontent.com/63132957/87288521-a7544100-c525-11ea-8b0c-356c1a0e9025.png)
