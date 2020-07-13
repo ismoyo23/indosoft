@@ -57,5 +57,6 @@ REACT_APP_URL=http://localhost:3000/
    ![Screenshot from 2020-07-13 16-13-15](https://user-images.githubusercontent.com/63132957/87287057-d7024980-c523-11ea-99f8-789c8e9acdc5.png)
    
    4. Mobile Version
+   
    ![Screenshot from 2020-07-13 16-16-11](https://user-images.githubusercontent.com/63132957/87287365-382a1d00-c524-11ea-9e86-48c488c46d70.png)
     
