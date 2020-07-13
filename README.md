@@ -33,7 +33,6 @@
     "sweetalert2": "^9.15.2",
     "swiper": "^5.4.5"
 
-
 # ENV
 REACT_APP_URL=http://localhost:3000/
 
@@ -43,3 +42,12 @@ REACT_APP_URL=http://localhost:3000/
  3. Responsive
  4. Search, sort and pagination
  5. Form validation
+ 
+ # Demo Image
+   1. First page
+   ![Screenshot from 2020-07-13 16-06-02](https://user-images.githubusercontent.com/63132957/87286393-05cbf000-c523-11ea-84cb-633c6c464ea8.png)
+   2. Login and register
+    -Login    
+   ![Screenshot from 2020-07-13 16-09-01](https://user-images.githubusercontent.com/63132957/87286555-32800780-c523-11ea-85f0-75ec1d2b33b5.png)
+   -register
+   ![Screenshot from 2020-07-13 16-10-02](https://user-images.githubusercontent.com/63132957/87286674-580d1100-c523-11ea-8ec1-6d9dc914235f.png)
