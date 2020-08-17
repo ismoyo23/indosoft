@@ -45,11 +45,11 @@ REACT_APP_URL=http://localhost:3000/
  
  # Demo Image
    1. First page
-   ![home](https://user-images.githubusercontent.com/63132957/90358448-37832a00-e080-11ea-80ec-308acb827c0d.png)
+   ![home-min](https://user-images.githubusercontent.com/63132957/90359461-343d6d80-e083-11ea-8814-f8ef69a9ee1b.png)
    2. Login and register
     1. Login manual
     2. login with QR Code
-    ![login with code QR](https://user-images.githubusercontent.com/63132957/90358545-8335d380-e080-11ea-8654-86cd62678afa.png)
+    ![login with code QR-min](https://user-images.githubusercontent.com/63132957/90359520-52a36900-e083-11ea-9586-7886ae2f2b0e.png)
    
    
    3.Borrow Books
