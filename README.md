@@ -47,10 +47,8 @@ REACT_APP_URL=http://localhost:3000/
    1. First page
    ![home](https://user-images.githubusercontent.com/63132957/90358448-37832a00-e080-11ea-80ec-308acb827c0d.png)
    2. Login and register
-   
-    -Login manual 
-    
-    -login with QR Code
+    1. Login manual
+    2. login with QR Code
     ![login with code QR](https://user-images.githubusercontent.com/63132957/90358545-8335d380-e080-11ea-8654-86cd62678afa.png)
    
    
