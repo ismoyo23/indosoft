@@ -46,8 +46,11 @@ REACT_APP_URL=http://localhost:3000/
  # Demo Image
    1. First page
    ![home-min](https://user-images.githubusercontent.com/63132957/90359461-343d6d80-e083-11ea-8814-f8ef69a9ee1b.png)
+   
    2. Login
     1. Login manual
+    
+There are two ways to log in. The first is manual login, the second is using a QR code, the second feature will obviously make it easier for users to log in because the time is faster
        ![login manual-min](https://user-images.githubusercontent.com/63132957/90360095-dca00180-e084-11ea-9fb6-a8a0a920d1bc.png)
     2. login with QR Code
     ![login with code QR-min](https://user-images.githubusercontent.com/63132957/90359520-52a36900-e083-11ea-9586-7886ae2f2b0e.png)
