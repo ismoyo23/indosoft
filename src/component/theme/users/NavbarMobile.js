@@ -6,18 +6,17 @@ import Swal from "sweetalert2";
 import { connect } from "react-redux";
 import { login, logout } from "../../../redux/actions/auth";
 import $ from "jquery";
-
 import {
-  NavItem,
   NavLink,
   Button,
   Input,
   Modal,
   ModalBody,
   FormGroup,
+  Card,
 } from "reactstrap";
 
-function UserBeforeLogin(props) {
+function NavbarMobile(props) {
   let history = useHistory();
   const { buttonLabel, className } = props;
 
@@ -36,6 +35,18 @@ function UserBeforeLogin(props) {
   let [address, setAddress] = useState("");
   let [role, setRole] = useState("0");
 
+  let showPopUp = (event) => {
+    event.preventDefault();
+    $(".userHide").css("visibility", "visible");
+    $(".userShow").css("visibility", "hidden");
+    $(".popShow").addClass(style.visibilityShow);
+  };
+  let showPopHide = (event) => {
+    event.preventDefault();
+    $(".userShow").css("visibility", "visible");
+    $(".userHide").css("visibility", "hidden");
+    $(".popShow").removeClass(style.visibilityShow);
+  };
   // =========================================================
   // Handle Login
 
@@ -54,7 +65,17 @@ function UserBeforeLogin(props) {
     } else {
       props.login(data).then((props) => {
         if (props.action.payload.data.data[0].role == 0) {
-          window.location.reload();
+          Swal.fire({
+            title: "Success",
+            text: "Login Success",
+            icon: "success",
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            if (result.value) {
+              window.location.reload();
+            }
+          });
         } else {
           Swal.fire({
             title: "Success",
@@ -119,31 +140,33 @@ function UserBeforeLogin(props) {
   let IconUser = (props) => {
     if (props.localStorage == null) {
       return (
-        <NavLink>
-          <i
-            style={{ color: "white" }}
-            class="fa fa-user-circle-o"
-            aria-hidden="true"
-          ></i>
-          <span className={style.NavLink}>
-            <strong onClick={props.login}>Login</strong> Or{" "}
-            <strong onClick={props.register}>Register</strong>
+        <Card body inverse className={`${style.cardProfile} popShow`}>
+          <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+          <strong>Not logged in</strong>
+          <span>
+            <button onClick={props.login} className={style.btnLogin}>
+              Login
+            </button>
+            <button onClick={props.register} className={style.btnRegister}>
+              Register
+            </button>
           </span>
-        </NavLink>
+        </Card>
       );
     } else {
       return (
-        <NavLink>
-          <i
-            style={{ color: "white" }}
-            class="fa fa-user-circle-o"
-            aria-hidden="true"
-          ></i>
-          <span className={style.NavLink}>{props.localStorage}</span>{" "}
-          <span onClick={props.logout} className={style.NavLink}>
-            Logout
+        <Card body inverse className={`${style.cardProfile} popShow`}>
+          <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+          <strong>{props.user}</strong>
+          <span>
+            <button onClick={props.logout} className={style.btnLogin}>
+              Logout
+            </button>
+            <button onClick={register} className={style.btnRegister}>
+              Profile
+            </button>
           </span>
-        </NavLink>
+        </Card>
       );
     }
   };
@@ -176,12 +199,16 @@ function UserBeforeLogin(props) {
       }
     });
   };
-  // =========================================================
   return (
     <>
       {/* ====================================================================== */}
       {/* Modal Login */}
-      <Modal className={style.ModalLogin} isOpen={modalLogin} toggle={login}>
+      <Modal
+        style={{ marginLeft: "40px" }}
+        className={style.ModalLogin}
+        isOpen={modalLogin}
+        toggle={login}
+      >
         <ModalBody className={style.ModalBackGrond}>
           <div className={style.IconModalColor}>
             <i class="fa fa-user-circle" aria-hidden="true"></i>
@@ -221,7 +248,12 @@ function UserBeforeLogin(props) {
 
       {/* ====================================================================== */}
       {/* Modal Regiter */}
-      <Modal className={style.ModalLogin} isOpen={modal} toggle={register}>
+      <Modal
+        style={{ marginLeft: "40px" }}
+        className={style.ModalLogin}
+        isOpen={modal}
+        toggle={register}
+      >
         <ModalBody className={style.ModalBackGrond}>
           <div className={style.IconModalColor}>
             <i class="fa fa-user-circle" aria-hidden="true"></i>
@@ -276,18 +308,27 @@ function UserBeforeLogin(props) {
           </form>
         </ModalBody>
       </Modal>
-      {/* ====================================================================== */}
-      {/* Icon Image for login and logout */}
-      <NavItem>
-        <IconUser
-          logout={logout}
-          localStorage={props.auth.data.name_user}
-          user={user}
-          login={login}
-          register={register}
-        />
-      </NavItem>
-      {/* ====================================================================== */}
+      <span className={`${style.navbarIconShow} userShow`}>
+        <i
+          onClick={showPopUp}
+          class="fa fa-user-circle-o"
+          aria-hidden="true"
+        ></i>
+      </span>
+      <span className={`${style.navbarIconHide} userHide`}>
+        <i
+          onClick={showPopHide}
+          class="fa fa-user-circle-o"
+          aria-hidden="true"
+        ></i>
+      </span>
+      <IconUser
+        user={props.auth.data.name_user}
+        logout={logout}
+        login={login}
+        register={register}
+        localStorage={props.auth.data.name_user}
+      />
     </>
   );
 }
@@ -296,4 +337,4 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProp = { login, logout };
 
-export default connect(mapStateToProps, mapDispatchToProp)(UserBeforeLogin);
+export default connect(mapStateToProps, mapDispatchToProp)(NavbarMobile);

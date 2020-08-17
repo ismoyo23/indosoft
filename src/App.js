@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import BorrowerUser from "./page/User/BorrowerBooks";
 import Users from "./page/User/HomePage";
-import SearchBooks from "./page/User/SearchBooks";
+
 import Admin from "./page/Admin/Dashboard";
 import CrudBooks from "./page/Admin/BooksCrud";
 import CrudAuthor from "./page/Admin/AuthorCrud";
@@ -17,7 +17,7 @@ function App() {
           <Route path="/DetailBooks/:id" component={DetailBooks} />
           {/* Route User */}
           <Route path="/" exact component={Users} />
-          <Route path="/search/:name" component={SearchBooks} />
+          <Route path="/search/:name" component={Users} />
           <Route path="/category/:category" component={Users} />
           <Route path="/sort/:sort" component={Users} />
           <Route path="/page/:page" component={Users} />
