@@ -1,20 +1,45 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Input, Table, Row, Col, Card, Button } from "reactstrap";
+import {
+  Input,
+  Table,
+  Row,
+  Col,
+  Card,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
 import style from "../../../styles/Admin/Body.module.css";
 import { connect } from "react-redux";
 import { borrowGet, borrowAction } from "../../../redux/actions/borrow";
 import { login } from "../../../redux/actions/auth";
 import Swal from "sweetalert2";
+import QrReader from "react-qr-reader";
 function Home(props) {
   useEffect(() => {
     getBorrowed();
   }, []);
 
+  let [result, setResult] = useState("no result");
+  let [titleButton, setTitleButton] = useState("Turn On");
+
   let getBorrowed = () => {
     props.borrowGet(process.env.REACT_API_URL).catch((error) => {
       console.log(error);
     });
+  };
+
+  let handleScan = (data) => {
+    if (data) {
+      setResult(data);
+    }
+  };
+
+  let handleError = (err) => {
+    console.log(err);
   };
 
   let HandleReturn = (id) => (event) => {
@@ -64,7 +89,28 @@ function Home(props) {
 
   return (
     <>
-      <Row style={{ marginTop: "30px" }} noGutters>
+      {/* modal */}
+      <Modal isOpen={modal} toggle={toggle} className={className}>
+        <ModalHeader toggle={toggle}>Scanning QR</ModalHeader>
+        <ModalBody>
+          <div>
+            <QrReader
+              delay={300}
+              onError={handleError}
+              onScan={handleScan}
+              style={{ width: "100%" }}
+            />
+            <p>{result}</p>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="info" onClick={toggle}>
+            Turn Of
+          </Button>
+        </ModalFooter>
+      </Modal>
+      {/* body */}
+      <Row style={{ marginTop: "30px", marginRight: 12 }} noGutters>
         <Col md="3" xs="10" className={style.Card}>
           <Card body>
             <i className="fa fa-user" aria-hidden="true">
@@ -82,17 +128,26 @@ function Home(props) {
           </Card>
         </Col>
 
-        <Col md="3" xs="10" className={style.Card}>
+        <Col
+          md="3"
+          xs="10"
+          style={{ cursor: "pointer" }}
+          className={style.Card}
+        >
           <Card body>
-            <i class="fa fa-commenting" aria-hidden="true">
-              <span className={style.writer}>Message</span>
+            <i class="fa fa-address-card-o" aria-hidden="true">
+              <span className={style.writer}>Absence</span>
             </i>
             <p className={style.writer}>120</p>
           </Card>
         </Col>
 
-        <Col md="12" xs="12">
-          <Card body className={style.CardTable}>
+        <Col md="7" xs="12">
+          <Card
+            style={{ marginLeft: 67, width: "85%" }}
+            body
+            className={style.CardTable}
+          >
             <Row>
               <Col md="6">
                 <header style={{ fontSize: "20px" }}>
@@ -113,9 +168,7 @@ function Home(props) {
                 <tr>
                   <th>No</th>
                   <th>Username</th>
-                  <th>Email</th>
                   <th>Title Books</th>
-                  <th>Address</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -125,9 +178,9 @@ function Home(props) {
                     <tr>
                       <td>{key + 1}</td>
                       <td>{borrow.name_user}</td>
-                      <td>{borrow.email}</td>
+
                       <td>{borrow.title}</td>
-                      <td>{borrow.address}</td>
+
                       <td>
                         <Button
                           onClick={HandleReturn(borrow.id_borrower)}
@@ -136,6 +189,53 @@ function Home(props) {
                           Return
                         </Button>
                       </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </Card>
+        </Col>
+        <Col md="5" xs="12">
+          <Card body className={style.CardTable}>
+            <Row>
+              <header style={{ fontSize: "20px", marginLeft: 12 }}>
+                <b>Absence Today</b>
+              </header>
+              {modal == true ? (
+                <Button
+                  onClick={toggle}
+                  style={{ height: 34, marginLeft: 12, marginBottom: 14 }}
+                  color="info"
+                >
+                  Scanning Active
+                </Button>
+              ) : (
+                <Button
+                  onClick={toggle}
+                  style={{ height: 34, marginLeft: 12, marginBottom: 14 }}
+                  color="danger"
+                >
+                  Turn On
+                </Button>
+              )}
+            </Row>
+            <Table hover className={style.Table}>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Username</th>
+                  <th>Class</th>
+                </tr>
+              </thead>
+              <tbody>
+                {props.borrowCrud.data.map((borrow, key) => {
+                  return (
+                    <tr>
+                      <td>{key + 1}</td>
+                      <td>{borrow.name_user}</td>
+
+                      <td>{borrow.title}</td>
                     </tr>
                   );
                 })}

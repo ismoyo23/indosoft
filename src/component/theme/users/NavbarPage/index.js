@@ -59,6 +59,9 @@ function NavbarPage(props) {
   const toggleQr = () => setModalQr(!modalQr);
   console.log(search);
   useEffect(() => {
+    if (props.auth.data.role == 1) {
+      history.push("/admin");
+    }
     getAllGenre();
     AOS.init({ duration: 2000 });
   }, []);
