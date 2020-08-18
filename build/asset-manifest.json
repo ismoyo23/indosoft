@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8072d5dd.chunk.css",
+    "main.js": "/static/js/main.8b631acc.chunk.js",
+    "main.js.map": "/static/js/main.8b631acc.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.d85d9678.js",
+    "runtime-main.js.map": "/static/js/runtime-main.d85d9678.js.map",
+    "static/css/2.f71eca2f.chunk.css": "/static/css/2.f71eca2f.chunk.css",
+    "static/js/2.62f6b184.chunk.js": "/static/js/2.62f6b184.chunk.js",
+    "static/js/2.62f6b184.chunk.js.map": "/static/js/2.62f6b184.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.90adacc8d04d9e62fc50f8938595c0d2.js": "/precache-manifest.90adacc8d04d9e62fc50f8938595c0d2.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.f71eca2f.chunk.css.map": "/static/css/2.f71eca2f.chunk.css.map",
+    "static/css/main.8072d5dd.chunk.css.map": "/static/css/main.8072d5dd.chunk.css.map",
+    "static/js/2.62f6b184.chunk.js.LICENSE.txt": "/static/js/2.62f6b184.chunk.js.LICENSE.txt",
+    "static/media/booksIcon.jpg": "/static/media/booksIcon.a396a763.jpg",
+    "static/media/font-awesome.min.css": "/static/media/fontawesome-webfont.fee66e71.woff",
+    "static/media/image.jpg": "/static/media/image.d91b710e.jpg",
+    "static/media/img3.jpg": "/static/media/img3.bcea8f3e.jpg",
+    "static/media/orangBaca3.jpg": "/static/media/orangBaca3.a5c08061.jpg",
+    "static/media/undraw_result_5583.png": "/static/media/undraw_result_5583.f6787b72.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d85d9678.js",
+    "static/css/2.f71eca2f.chunk.css",
+    "static/js/2.62f6b184.chunk.js",
+    "static/css/main.8072d5dd.chunk.css",
+    "static/js/main.8b631acc.chunk.js"
+  ]
+}
