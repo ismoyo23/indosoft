@@ -49,6 +49,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 function HomePage(props) {
+  console.log(process.env.REACT_APP_URL, 'env')
   let history = useHistory();
   let [dataBooks, setDataBooks] = useState([]);
 
