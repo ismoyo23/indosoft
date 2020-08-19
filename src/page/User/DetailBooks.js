@@ -14,7 +14,7 @@ function DetailBooks(props) {
     axios({
       method: "GET",
       url:
-        "http://localhost:3000/books/?search=" +
+        "http://54.158.98.207:3006/books/?search=" +
         props.match.params.id +
         "&field=id",
     })
