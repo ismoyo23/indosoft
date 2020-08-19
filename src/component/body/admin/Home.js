@@ -167,8 +167,10 @@ function Home(props) {
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Username</th>
-                  <th>Title Books</th>
+                  <th>Nisn</th>
+                  <th>Name</th>
+                  <th>Class</th>
+                  <th>Majors</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -177,10 +179,10 @@ function Home(props) {
                   return (
                     <tr>
                       <td>{key + 1}</td>
-                      <td>{borrow.name_user}</td>
-
+                      <td>{borrow.nik}</td>
                       <td>{borrow.title}</td>
-
+                      <td>{borrow.class}</td>
+                      <td>{borrow.majors}</td>
                       <td>
                         <Button
                           onClick={HandleReturn(borrow.id_borrower)}

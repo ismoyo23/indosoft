@@ -31,7 +31,8 @@
     "redux-persist": "^6.0.0",
     "redux-promise-middleware": "^6.1.2",
     "sweetalert2": "^9.15.2",
-    "swiper": "^5.4.5"
+    "swiper": "^5.4.5",
+    "vercel": "^19.2.0"
   },
   "scripts": {
     "start": "PORT=3006 react-scripts start",
