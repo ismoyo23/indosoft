@@ -14,9 +14,9 @@ function DetailBooks(props) {
     axios({
       method: "GET",
       url:
-        "http://54.158.98.207:3000/books/?search=" +
+        `http://${process.ENV.REACT_APP_URL}/books/?search=" +
         props.match.params.id +
-        "&field=id",
+        "&field=id`,
     })
       .then((response) => {
         console.log(response);
