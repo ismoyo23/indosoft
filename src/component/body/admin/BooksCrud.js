@@ -318,7 +318,7 @@ function BooksCrud(props) {
       {/* =================================================================== */}
       {/* table */}
 
-      <Row noGutters>
+      <Row style={{ marginLeft: 80 }} noGutters>
         <Col md="12" xs="12">
           <Card body className={style.CardTable}>
             <Row>
@@ -343,7 +343,7 @@ function BooksCrud(props) {
                 <tr>
                   <th>Title</th>
                   <th>Author</th>
-                  <th>desciption</th>
+                  <th>Rak Books</th>
                   <th>Stok</th>
                   <th>Action</th>
                 </tr>
@@ -354,7 +354,7 @@ function BooksCrud(props) {
                     <tr>
                       <td>{allBooks.title}</td>
                       <td>{allBooks.name_author}</td>
-                      <td>{allBooks.discription.substr("0", "22")}</td>
+                      <td>{allBooks.rak}</td>
                       <td>{allBooks.stok}</td>
                       <td>
                         <Button

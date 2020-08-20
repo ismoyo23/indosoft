@@ -18,7 +18,7 @@ import {
 } from "reactstrap";
 import "font-awesome/css/font-awesome.min.css";
 import style from "../../../styles/Admin/Sidebar.module.css";
-import img from "../../../image/image.jpg";
+import img from "../../../image/avatar.png";
 import $ from "jquery";
 import { Link } from "react-router-dom";
 class Header extends Component {

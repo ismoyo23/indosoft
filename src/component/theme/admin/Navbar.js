@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
-import logo from "../../../image/booksIcon.jpg";
+import logo from "../../../image/avatar.png";
 import style from "../../../styles/Admin/Navbar.module.css";
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";

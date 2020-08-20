@@ -184,7 +184,7 @@ function GenreCrud(props) {
       {/* ======================================================= */}
       {/* table*/}
 
-      <Row noGutters>
+      <Row style={{ marginLeft: 80 }} noGutters>
         <Col md="12" xs="12">
           <Card body className={style.CardTable}>
             <Row>
