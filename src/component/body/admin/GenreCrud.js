@@ -81,7 +81,17 @@ function GenreCrud(props) {
     };
 
     props.actionGenre(data).then(() => {
-      Swal.fire("Success!", `${modalTitle} success`, "success");
+      Swal.fire({
+        title: "Success",
+        text: `${modalTitle} Data Sucess`,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.value) {
+          window.location.reload();
+        }
+      });
     });
   };
 
@@ -137,7 +147,17 @@ function GenreCrud(props) {
           id: id,
         };
         props.deleteGenre(data).then(() => {
-          Swal.fire("Success!", `Delete success`, "success");
+          Swal.fire({
+            title: "Success",
+            text: "Delete Data Sucess",
+            icon: "success",
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Yes",
+          }).then((result) => {
+            if (result.value) {
+              window.location.reload();
+            }
+          });
         });
       }
     });

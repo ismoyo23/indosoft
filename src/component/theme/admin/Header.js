@@ -94,8 +94,8 @@ class Header extends Component {
               className={style.NavLink}
               href="#"
             >
-              <i className="fa fa-tasks" aria-hidden="true"></i>
-              <span className={style.title}>User Page</span>
+              <i className="fa fa-user-circle-o" aria-hidden="true"></i>
+              <span className={style.title}>User Settings</span>
             </NavLink>
           </NavItem>
         </Nav>

@@ -180,15 +180,15 @@ function Home(props) {
                     <tr>
                       <td>{key + 1}</td>
                       <td>{borrow.nik}</td>
-                      <td>{borrow.title}</td>
+                      <td>{borrow.name_user}</td>
                       <td>{borrow.class}</td>
                       <td>{borrow.majors}</td>
                       <td>
                         <Button
                           onClick={HandleReturn(borrow.id_borrower)}
-                          color="danger"
+                          color="info"
                         >
-                          Return
+                          Process
                         </Button>
                       </td>
                     </tr>

@@ -78,7 +78,17 @@ function AuthorCrud(props) {
         props
           .removeData(data)
           .then(() => {
-            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            Swal.fire({
+              title: "Success",
+              text: "Delete Data Sucess",
+              icon: "success",
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "Yes",
+            }).then((result) => {
+              if (result.value) {
+                window.location.reload();
+              }
+            });
           })
           .catch((error) => {
             console.log(error);
@@ -107,7 +117,17 @@ function AuthorCrud(props) {
       profile_author: profileAuthor,
     };
     props.addData(data).then(() => {
-      Swal.fire("Success!", `${modalTitle} success`, "success");
+      Swal.fire({
+        title: "Success",
+        text: "Add Data Sucess",
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.value) {
+          window.location.reload();
+        }
+      });
     });
   };
 

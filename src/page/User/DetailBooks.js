@@ -5,7 +5,6 @@ import axios from "axios";
 import Footer from "../../component/body/users/FooterComponent";
 function DetailBooks(props) {
   let [idBooks, setIdBooks] = useState([]);
-  let [idBorower, setIdBorower] = useState([]);
   useEffect(() => {
     getIdBooks();
   }, []);
@@ -13,10 +12,7 @@ function DetailBooks(props) {
   let getIdBooks = () => {
     axios({
       method: "GET",
-      url:
-        `http://${process.ENV.REACT_APP_URL}/books/?search=" +
-        props.match.params.id +
-        "&field=id`,
+      url: `${process.env.REACT_APP_URL}books/?search=${props.match.params.id}&field=id`,
     })
       .then((response) => {
         console.log(response);
