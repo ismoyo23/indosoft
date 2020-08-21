@@ -1,11 +1,7 @@
 .NavBar {
-  margin-left: 34px;
   width: 100%;
   background-color: #141414;
   height: 57px;
-  -webkit-box-shadow: 0 8px 6px -6px black;
-  -moz-box-shadow: 0 8px 6px -6px black;
-  box-shadow: 0 8px 6px -6px black;
 }
 
 .NavLink {

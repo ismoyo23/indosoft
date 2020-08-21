@@ -3,7 +3,6 @@
 .NavKu {
   background-color: black;
   width: 50px;
-  position: fixed;
 }
 
 .NavLink {
@@ -28,12 +27,11 @@
 }
 
 .sidebar {
-  position: fixed;
   height: 100%;
   background: #141414;
   box-shadow: 5px 0 5px -5px #333;
   box-sizing: border-box;
-  width: 250px;
+  width: 117%;
   transition: all 0.9s;
 }
 
@@ -100,7 +98,6 @@
 
 .Col2 {
   width: 100%;
-  margin-left: 300px;
 }
 
 @media only screen and (max-width: 600px) {

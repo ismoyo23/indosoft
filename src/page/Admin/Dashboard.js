@@ -31,15 +31,21 @@ class Dashboard extends Component {
     };
     return (
       <>
-        <div className={`${style.sidebar} sidebar`}>
-          <Sidebar />
-        </div>
-        <div className={`${style.Col2} navbar123`}>
-          <Navbar eventShow={EventClickShow} event={EventClick} />
-          <div className="body">
-            <HomeAdmin />
-          </div>
-        </div>
+        <Row>
+          <Col md="2">
+            <div className={`${style.sidebar} sidebar`}>
+              <Sidebar />
+            </div>
+          </Col>
+          <Col md="10">
+            <div className={`${style.Col2} navbar123`}>
+              <Navbar eventShow={EventClickShow} event={EventClick} />
+              <div className="body">
+                <HomeAdmin />
+              </div>
+            </div>
+          </Col>
+        </Row>
       </>
     );
   }

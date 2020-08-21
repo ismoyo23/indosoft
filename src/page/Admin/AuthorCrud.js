@@ -32,17 +32,21 @@ class Author extends Component {
     };
     return (
       <>
-        <div className={`${style.sidebar} sidebar`}>
-          <Sidebar />
-        </div>
-        <div>
-          <div style={{ width: "100%" }} className={`${style.Col2}`}>
-            <Navbar eventShow={EventClickShow} event={EventClick} />
-            <div className="body">
-              <AuthorCrud />
+        <Row>
+          <Col md="2">
+            <div className={`${style.sidebar} sidebar`}>
+              <Sidebar />
             </div>
-          </div>
-        </div>
+          </Col>
+          <Col md="10">
+            <div style={{ width: "100%" }} className={`${style.Col2}`}>
+              <Navbar eventShow={EventClickShow} event={EventClick} />
+              <div className="body">
+                <AuthorCrud />
+              </div>
+            </div>
+          </Col>
+        </Row>
       </>
     );
   }

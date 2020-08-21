@@ -318,7 +318,7 @@ function BooksCrud(props) {
       {/* =================================================================== */}
       {/* table */}
 
-      <Row style={{ marginLeft: 80 }} noGutters>
+      <Row noGutters>
         <Col md="12" xs="12">
           <Card body className={style.CardTable}>
             <Row>

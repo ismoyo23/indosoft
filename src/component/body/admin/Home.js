@@ -143,11 +143,7 @@ function Home(props) {
         </Col>
 
         <Col md="7" xs="12">
-          <Card
-            style={{ marginLeft: 67, width: "85%" }}
-            body
-            className={style.CardTable}
-          >
+          <Card body className={style.CardTable}>
             <Row>
               <Col md="6">
                 <header style={{ fontSize: "20px" }}>
