@@ -1,31 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.8072d5dd.chunk.css",
-    "main.js": "/static/js/main.8bfdfae9.chunk.js",
-    "main.js.map": "/static/js/main.8bfdfae9.chunk.js.map",
+    "main.css": "/static/css/main.7375c11b.chunk.css",
+    "main.js": "/static/js/main.d94542e7.chunk.js",
+    "main.js.map": "/static/js/main.d94542e7.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.d85d9678.js",
     "runtime-main.js.map": "/static/js/runtime-main.d85d9678.js.map",
-    "static/css/2.f71eca2f.chunk.css": "/static/css/2.f71eca2f.chunk.css",
-    "static/js/2.45312af4.chunk.js": "/static/js/2.45312af4.chunk.js",
-    "static/js/2.45312af4.chunk.js.map": "/static/js/2.45312af4.chunk.js.map",
+    "static/css/2.a75d6c10.chunk.css": "/static/css/2.a75d6c10.chunk.css",
+    "static/js/2.5cb39515.chunk.js": "/static/js/2.5cb39515.chunk.js",
+    "static/js/2.5cb39515.chunk.js.map": "/static/js/2.5cb39515.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.e3e053a44559bfb92f41028ae1bf95b6.js": "/precache-manifest.e3e053a44559bfb92f41028ae1bf95b6.js",
+    "precache-manifest.b418a7260c3444d12645664659a050c0.js": "/precache-manifest.b418a7260c3444d12645664659a050c0.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/2.f71eca2f.chunk.css.map": "/static/css/2.f71eca2f.chunk.css.map",
-    "static/css/main.8072d5dd.chunk.css.map": "/static/css/main.8072d5dd.chunk.css.map",
-    "static/js/2.45312af4.chunk.js.LICENSE.txt": "/static/js/2.45312af4.chunk.js.LICENSE.txt",
-    "static/media/booksIcon.jpg": "/static/media/booksIcon.a396a763.jpg",
+    "static/css/2.a75d6c10.chunk.css.map": "/static/css/2.a75d6c10.chunk.css.map",
+    "static/css/main.7375c11b.chunk.css.map": "/static/css/main.7375c11b.chunk.css.map",
+    "static/js/2.5cb39515.chunk.js.LICENSE.txt": "/static/js/2.5cb39515.chunk.js.LICENSE.txt",
     "static/media/font-awesome.min.css": "/static/media/fontawesome-webfont.fee66e71.woff",
-    "static/media/image.jpg": "/static/media/image.d91b710e.jpg",
-    "static/media/img3.jpg": "/static/media/img3.bcea8f3e.jpg",
     "static/media/orangBaca3.jpg": "/static/media/orangBaca3.a5c08061.jpg",
     "static/media/undraw_result_5583.png": "/static/media/undraw_result_5583.f6787b72.png"
   },
   "entrypoints": [
     "static/js/runtime-main.d85d9678.js",
-    "static/css/2.f71eca2f.chunk.css",
-    "static/js/2.45312af4.chunk.js",
-    "static/css/main.8072d5dd.chunk.css",
-    "static/js/main.8bfdfae9.chunk.js"
+    "static/css/2.a75d6c10.chunk.css",
+    "static/js/2.5cb39515.chunk.js",
+    "static/css/main.7375c11b.chunk.css",
+    "static/js/main.d94542e7.chunk.js"
   ]
 }
