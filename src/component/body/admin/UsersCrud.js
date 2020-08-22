@@ -3,17 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Input,
   Table,
-  Container,
   Row,
   Col,
   Card,
   Button,
-  CardImg,
-  CardTitle,
-  CardText,
-  CardDeck,
-  CardSubtitle,
-  CardBody,
   Modal,
   ModalHeader,
   ModalBody,
@@ -21,17 +14,16 @@ import {
   Form,
   FormGroup,
   Label,
-  FormText,
 } from "reactstrap";
 import style from "../../../styles/Admin/Body.module.css";
 import Swal from "sweetalert2";
-import { user } from "../../../redux/actions/auth";
-import { connect } from "react-redux";
-
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import QRCode from "qrcode.react";
+import ReactToPdf from "react-to-pdf";
 function UsersCrud(props) {
-  console.log(props);
-
-  const { buttonLabel, className } = props;
+  let history = useHistory();
+  const { className } = props;
 
   //=======================================================================================
   // component did mount
@@ -41,12 +33,26 @@ function UsersCrud(props) {
 
   //=======================================================================================
   // State
+  const [modalQR, setModalQR] = useState(false);
+
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  let [nameGenre, setNameGenre] = useState("");
+  let [nameUsers, setNameUsers] = useState("");
+  let [nis, setNis] = useState("");
+  let [classUsers, setClassUsers] = useState("");
+  let [majors, setMajors] = useState("");
+  let [role, setRole] = useState("1");
   let [id, setId] = useState();
-  let [modalTitle, setModalTitle] = useState("Add Genre");
+  let [modalTitle, setModalTitle] = useState("Add Users");
   let [search, setSearch] = useState("");
+  let [getUser, setGetUsers] = useState([]);
+
+  let toggleQR = (nis, name) => (event) => {
+    event.preventDefault();
+    setModalQR(!modalQR);
+    setNis(nis);
+    setNameUsers(name);
+  };
 
   //=======================================================================================
   // process add and update data
@@ -56,16 +62,23 @@ function UsersCrud(props) {
       // ========================================//
       // url and method
       ConUrl:
-        modalTitle == "Add Genre"
-          ? `${process.env.REACT_APP_URL}books/genre`
-          : `${process.env.REACT_APP_URL}books/genre/${id}`,
-      Method: modalTitle == "Add Genre" ? `POST` : `PUT`,
-      // =======================================//
-      // Call value from state
-      name_genre: nameGenre,
+        modalTitle == "Add Users"
+          ? `${process.env.REACT_APP_URL}books/user`
+          : `${process.env.REACT_APP_URL}books/user/${id}`,
+      Method: modalTitle == "Add Users" ? `POST` : `PUT`,
     };
 
-    props.actionGenre(data).then(() => {
+    axios({
+      method: data.Method,
+      url: data.ConUrl,
+      data: {
+        name_user: nameUsers,
+        nik: nis,
+        class: classUsers,
+        majors: majors,
+        role: role,
+      },
+    }).then(() => {
       Swal.fire({
         title: "Success",
         text: `${modalTitle} Data Sucess`,
@@ -84,28 +97,38 @@ function UsersCrud(props) {
   // process call data from api back end
   let GetAllUsers = () => {
     let data = {
-      Search: search == "" ? "" : `/?field=name_user&search=${search}`,
       ConUrl: process.env.REACT_APP_URL,
     };
-    props.user(data);
+    axios({
+      method: "GET",
+      url: `${data.ConUrl}books/user?search=${props.filter}&field=role`,
+    }).then((response) => {
+      setGetUsers(response.data.data);
+    });
   };
 
   //=======================================================================================
   // process show data genre by id
-  let ShowGenre = (id) => (event) => {
+  let ShowUsers = (id) => (event) => {
     event.preventDefault();
     let data = {
       ConUrl: process.env.REACT_APP_URL,
       id: id,
     };
-    props
-      .showGenre(data)
-      .then((props) => {
-        let data = props.action.payload.data.data[0];
+    axios({
+      method: "GET",
+      url: `${data.ConUrl}books/user?search=${id}&field=id_user`,
+    })
+      .then((response) => {
+        let data = response.data.data[0];
         setId(id);
         setModal(true);
-        setNameGenre(data.name_genre);
-        setModalTitle("Edit Genre");
+        setNameUsers(data.name_user);
+        setNis(data.nik);
+        setMajors(data.majors);
+        setRole(data.role);
+        setClassUsers(data.class);
+        setModalTitle("Edit Users");
       })
       .catch((error) => {
         console.log(error);
@@ -114,7 +137,7 @@ function UsersCrud(props) {
 
   //=======================================================================================
   // process delete data
-  let DeleteGenre = (id) => (event) => {
+  let DeleteUsers = (id) => (event) => {
     event.preventDefault();
 
     Swal.fire({
@@ -131,7 +154,10 @@ function UsersCrud(props) {
           ConUrl: process.env.REACT_APP_URL,
           id: id,
         };
-        props.deleteGenre(data).then(() => {
+        axios({
+          method: "DELETE",
+          url: `${process.env.REACT_APP_URL}books/user/${id}`,
+        }).then(() => {
           Swal.fire({
             title: "Success",
             text: "Delete Data Sucess",
@@ -154,9 +180,78 @@ function UsersCrud(props) {
     setModalTitle("Add Genre");
     setModal(false);
     setId("");
+    setNameUsers("");
+    setNis("");
+    setMajors("");
+  };
+
+  // ======================================================================================
+  // filter user
+  let filterUsers = (filter) => {
+    history.push(`/user/${filter}`);
+    window.location.reload();
+  };
+
+  let closeQR = (event) => {
+    event.preventDefault();
+    setModalQR(false);
+    setNis("");
+    setNameUsers("");
+  };
+
+  let options = {
+    orientation: "landscape",
+    unit: "in",
+    format: [200, 230],
   };
   return (
     <>
+      {/* ======================================================= */}
+      {/* modal for creeate QR */}
+      <ReactToPdf style={{ width: 100 }} filename={nameUsers} options={options}>
+        {({ toPdf, targetRef }) => (
+          <Modal
+            style={{ width: 300, height: 300 }}
+            isOpen={modalQR}
+            toggle={toggleQR}
+            className={className}
+          >
+            <div ref={targetRef}>
+              <ModalHeader>Genrete QR</ModalHeader>
+              <ModalBody>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <QRCode value={nis} />
+                </div>
+                <p style={{ textAlign: "center", marginTop: 12 }}>
+                  Name: {nameUsers}
+                </p>
+                <p
+                  style={{
+                    textAlign: "center",
+                    marginTop: -12,
+                  }}
+                >
+                  Nis: {nis}
+                </p>
+              </ModalBody>
+            </div>
+            <ModalFooter>
+              <Button color="primary" onClick={toPdf}>
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+              </Button>{" "}
+              <Button color="secondary" onClick={closeQR}>
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </Button>
+            </ModalFooter>
+          </Modal>
+        )}
+      </ReactToPdf>
+
       {/* ======================================================= */}
       {/* modal from add and update data*/}
       <Modal isOpen={modal} toggle={toggle} className={className}>
@@ -165,14 +260,70 @@ function UsersCrud(props) {
           <ModalBody>
             <Form>
               <FormGroup>
-                <Label for="exampleEmail">Name Genre</Label>
+                <Label for="exampleEmail">Name Users</Label>
                 <Input
-                  value={nameGenre}
-                  onChange={(e) => setNameGenre(e.target.value)}
+                  value={nameUsers}
+                  onChange={(e) => setNameUsers(e.target.value)}
                   type="text"
                   id="exampleEmail"
-                  placeholder="Title Books"
+                  placeholder="Name Users"
                 />
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="exampleEmail">Class</Label>
+                <Input
+                  value={classUsers}
+                  onChange={(e) => setClassUsers(e.target.value)}
+                  type="text"
+                  placeholder="Class"
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="exampleEmail">Majors</Label>
+                <Input
+                  value={majors}
+                  onChange={(e) => setMajors(e.target.value)}
+                  type="text"
+                  placeholder="Majors"
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="exampleEmail">Nis</Label>
+                <Input
+                  value={nis}
+                  onChange={(e) => setNis(e.target.value)}
+                  type="number"
+                  placeholder="Nis"
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="exampleSelect">Role</Label>
+                <Input
+                  onChange={(e) => setRole(e.target.value)}
+                  type="select"
+                  name="select"
+                  id="exampleSelect"
+                >
+                  {role == 1 ? (
+                    <>
+                      <option selected value="1">
+                        Admin
+                      </option>
+                      <option value="0">Users</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="1">Admin</option>
+                      <option selected value="0">
+                        Users
+                      </option>
+                    </>
+                  )}
+                </Input>
               </FormGroup>
             </Form>
           </ModalBody>
@@ -185,22 +336,47 @@ function UsersCrud(props) {
           </ModalFooter>
         </form>
       </Modal>
-
       {/* ======================================================= */}
       {/* table*/}
-
       <Row noGutters>
         <Col md="12" xs="12">
           <Card body className={style.CardTable}>
             <Row>
-              <Col md="6">
+              <Col md="4">
                 <Button onClick={toggle} color="primary">
                   <i class="fa fa-plus" aria-hidden="true"></i> Add Users
                 </Button>
               </Col>
 
-              <Col md="6">
+              <Col style={{ marginLeft: 140 }} md="3">
+                <FormGroup row>
+                  <Input
+                    onChange={(e) => filterUsers(e.target.value)}
+                    type="select"
+                    name="select"
+                    id="exampleSelect"
+                  >
+                    {props.filter == 0 ? (
+                      <>
+                        <option value="1">Admin</option>
+                        <option selected value="0">
+                          Users
+                        </option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="1" selected>
+                          Admin
+                        </option>
+                        <option value="0">Users</option>
+                      </>
+                    )}
+                  </Input>
+                </FormGroup>
+              </Col>
+              <Col md="3">
                 <Input
+                  style={{ marginLeft: "auto" }}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className={style.Search}
@@ -221,15 +397,17 @@ function UsersCrud(props) {
                 </tr>
               </thead>
               <tbody>
-                {props.getUser.data.map((genre, key) => {
+                {getUser.map((users, key) => {
                   return (
                     <tr>
                       <td scope="row">{key + 1}</td>
-                      <td>{genre.nik}</td>
-                      <td>{genre.name_user}</td>
+                      <td>{users.nik}</td>
+                      <td style={{ width: 200 }}>{users.name_user}</td>
+                      <td>{users.class}</td>
+                      <td>{users.majors}</td>
                       <td>
                         <Button
-                          onClick={ShowGenre(genre.id_genre)}
+                          onClick={ShowUsers(users.id_user)}
                           color="primary"
                         >
                           <i
@@ -238,10 +416,19 @@ function UsersCrud(props) {
                           ></i>
                         </Button>
                         <Button
-                          onClick={DeleteGenre(genre.id_genre)}
+                          style={{ marginLeft: 3 }}
+                          onClick={DeleteUsers(users.id_user)}
                           color="danger"
                         >
                           <i class="fa fa-trash" aria-hidden="true"></i>
+                        </Button>
+
+                        <Button
+                          style={{ marginLeft: 3 }}
+                          onClick={toggleQR(users.nik, users.name_user)}
+                          color="info"
+                        >
+                          <i class="fa fa-qrcode" aria-hidden="true"></i>
                         </Button>
                       </td>
                     </tr>
@@ -256,9 +443,4 @@ function UsersCrud(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  getUser: state.user,
-});
-const mapDispatchToProp = { user };
-
-export default connect(mapStateToProps, mapDispatchToProp)(UsersCrud);
+export default UsersCrud;

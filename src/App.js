@@ -28,7 +28,7 @@ function App() {
           <Route path="/books" component={CrudBooks} />
           <Route path="/author" component={CrudAuthor} />
           <Route path="/genre" component={CrudGenre} />
-          <Route path="/user" component={CrudUser} />
+          <Route path="/user/:filter" component={CrudUser} />
         </Switch>
       </Router>
     </div>

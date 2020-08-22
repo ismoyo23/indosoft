@@ -90,9 +90,9 @@ class Header extends Component {
 
           <NavItem>
             <NavLink onClick={handleDropdownSettings} className={style.NavLink}>
-              <Link style={{ color: "white" }} to="/user">
+              <Link style={{ color: "white" }} to="/user/1">
                 <i className="fa fa-user-circle-o" aria-hidden="true"></i>
-                <span className={style.title}>User Settins</span>
+                <span className={style.title}>User Settings</span>
               </Link>
             </NavLink>
           </NavItem>
