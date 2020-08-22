@@ -7,6 +7,7 @@ import GenreCrud from "../../component/body/admin/GenreCrud";
 import style from "../../styles/Admin/Sidebar.module.css";
 import { Row, Col, Container } from "reactstrap";
 import $ from "jquery";
+
 class Genre extends Component {
   componentDidMount() {
     $(".sideBarBtn").show();

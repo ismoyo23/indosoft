@@ -32,32 +32,53 @@ function DetailPage(props) {
   let handleBorrowed = (event) => {
     event.preventDefault();
     if (props.auth.data.id_user != undefined) {
-      axios({
-        method: "POST",
-        url: `${process.env.REACT_APP_URL}books/borrower`,
-        data: {
-          id_books: id,
-          id_user: props.auth.data.id_user,
-          status: status,
-          count: count,
-        },
-      })
-        .then((response) => {
-          Swal.fire({
-            title: "Success",
-            text: "Books is borrowed",
-            icon: "success",
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Ok",
-          }).then((result) => {
-            if (result.value) {
-              window.location.reload();
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Are you sure you want to borrow this book?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.value) {
+          axios({
+            method: "GET",
+            url: `${process.env.REACT_APP_URL}books/borrower?field=users.id_user&search=${props.auth.data.id_user}&field2=borrower.id_book&search2=${id}`,
+          }).then((res) => {
+            if (res.data.data[0] == null) {
+              axios({
+                method: "POST",
+                url: `${process.env.REACT_APP_URL}books/borrower`,
+                data: {
+                  id_books: id,
+                  id_user: props.auth.data.id_user,
+                  status: "Process",
+                  count: count,
+                },
+              }).then((response) => {
+                Swal.fire({
+                  title: "Success",
+                  text: "Books is borrowed",
+                  icon: "success",
+                  confirmButtonColor: "#3085d6",
+                  confirmButtonText: "Ok",
+                }).then((result) => {
+                  if (result.value) {
+                    window.location.reload();
+                  }
+                });
+              });
+            } else {
+              Swal.fire(
+                "Warning",
+                "you've borrowed this book, you can't borrow it anymore",
+                "warning"
+              );
             }
           });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        }
+      });
     } else {
       Swal.fire({
         title: "Warning",

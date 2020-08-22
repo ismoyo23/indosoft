@@ -13,6 +13,7 @@ import {
   CardSubtitle,
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
+import Moment from "moment";
 function BorrowerPage(props) {
   let history = useHistory();
 
@@ -43,25 +44,77 @@ function BorrowerPage(props) {
                 fontSize: 15,
                 color: "gray",
                 marginTop: 1,
-                height: 50,
               }}
             >
-              Author: {props.borrow.name_author}
+              Borrow: {Moment(props.borrow.created_at).format("DD MM YYYY")}
             </CardSubtitle>
-
-            <Button
-              onClick={() => history.push(`/DetailBooks/${props.borrow.id}`)}
-              style={{
-                marginTop: 20,
-                width: "100%",
-                backgroundColor: "white",
-                borderWidth: 2,
-                borderColor: "black",
-                color: "black",
-              }}
-            >
-              View
-            </Button>
+            {props.borrow.status != "Borrowed" ? (
+              <CardSubtitle
+                style={{
+                  fontSize: 15,
+                  color: "gray",
+                  marginTop: 1,
+                }}
+              >
+                Return: Not set
+              </CardSubtitle>
+            ) : (
+              <CardSubtitle
+                style={{
+                  fontSize: 15,
+                  color: "gray",
+                  marginTop: 1,
+                }}
+              >
+                Return: {Moment(props.borrow.updated_at).format("DD MM YYYY")}
+              </CardSubtitle>
+            )}
+            {props.borrow.status != "Borrowed" ? (
+              <Button
+                onClick={() => history.push(`/DetailBooks/${props.borrow.id}`)}
+                style={{
+                  marginTop: 20,
+                  width: "100%",
+                  backgroundColor: "white",
+                  borderWidth: 2,
+                  borderColor: "black",
+                  color: "black",
+                }}
+              >
+                Process
+              </Button>
+            ) : (
+              <>
+                {Moment(props.borrow.updated_at).format("y-MM-DD") >=
+                Moment(Date()).format("y-MM-DD") ? (
+                  <Button
+                    style={{
+                      marginTop: 20,
+                      width: "100%",
+                      backgroundColor: "white",
+                      borderWidth: 2,
+                      borderColor: "black",
+                      color: "black",
+                    }}
+                  >
+                    Late
+                  </Button>
+                ) : (
+                  <Button
+                    style={{
+                      marginTop: 20,
+                      width: "100%",
+                      backgroundColor: "white",
+                      borderWidth: 2,
+                      borderColor: "black",
+                      color: "black",
+                    }}
+                  >
+                    Borrowed
+                  </Button>
+                )}
+              </>
+            )}
           </CardBody>
         </Card>
       </Col>

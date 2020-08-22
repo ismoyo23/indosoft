@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 import { genreGet } from "../../../../redux/actions/genre";
 import { login } from "../../../../redux/actions/auth";
 import { logout } from "../../../../redux/actions/auth";
-import $ from "jquery";
 
 import {
   Collapse,
@@ -21,42 +20,32 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   NavbarText,
   Row,
   Col,
   Card,
   CardImg,
-  CardText,
   CardBody,
   CardTitle,
   CardSubtitle,
   Button,
   InputGroup,
-  InputGroupText,
-  InputGroupAddon,
   Input,
 } from "reactstrap";
-import img from "../../../../image/logo.jpeg";
+
 import img2 from "../../../../image/orangBaca3.jpg";
-import imgBooks from "../../../../image/img3.jpg";
 import Swal from "sweetalert2";
 import "font-awesome/css/font-awesome.min.css";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 function HomePage(props) {
-  console.log(process.env.REACT_APP_URL, 'env')
+  console.log(process.env.REACT_APP_URL, "env");
   let history = useHistory();
   let [dataBooks, setDataBooks] = useState([]);
-
+  console.log(dataBooks);
   useEffect(() => {
     getAllBooks();
 
-    if (dataBooks[0] != null) {
+    if (dataBooks === null) {
       Swal.fire({
         title: "Im Sorry",
         text: `Data not found`,
@@ -97,8 +86,13 @@ function HomePage(props) {
 
   let handleSearch = (event) => {
     event.preventDefault();
-    history.push(`/search/${search}`);
-    window.location.reload();
+    if (search == "") {
+      history.push(`/`);
+      window.location.reload();
+    } else {
+      history.push(`/search/${search}`);
+      window.location.reload();
+    }
   };
 
   let handleCategory = (category) => (event) => {

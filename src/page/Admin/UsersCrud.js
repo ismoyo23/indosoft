@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../../component/theme/admin/Header";
 import Navbar from "../../component/theme/admin/Navbar";
-import AbsenceComponent from "../../component/body/admin/AbsenceComponent";
+import UserCrud from "../../component/body/admin/UsersCrud";
 import style from "../../styles/Admin/Sidebar.module.css";
+import { Row, Col } from "reactstrap";
 import $ from "jquery";
-class UsersAbsence extends Component {
+class UsersCrud extends Component {
   componentDidMount() {
     $(".sideBarBtn").show();
     $(".sideBarBtnHide").hide();
@@ -30,18 +31,24 @@ class UsersAbsence extends Component {
     };
     return (
       <>
-        <div className={`${style.sidebar} sidebar`}>
-          <Sidebar />
-        </div>
-        <div className={`${style.Col2} navbar123`}>
-          <Navbar eventShow={EventClickShow} event={EventClick} />
-          <div className="body">
-            <AbsenceComponent />
-          </div>
-        </div>
+        <Row>
+          <Col md="2">
+            <div className={`${style.sidebar} sidebar`}>
+              <Sidebar />
+            </div>
+          </Col>
+          <Col md="10">
+            <div className={`${style.Col2} navbar123`}>
+              <Navbar eventShow={EventClickShow} event={EventClick} />
+              <div className="body">
+                <UserCrud />
+              </div>
+            </div>
+          </Col>
+        </Row>
       </>
     );
   }
 }
 
-export default UsersAbsence;
+export default UsersCrud;

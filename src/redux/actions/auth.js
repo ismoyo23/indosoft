@@ -16,3 +16,11 @@ export let logout = () => {
     type: "LOGOUT",
   };
 };
+
+export let user = (data) => ({
+  type: "USER",
+  payload: axios({
+    method: "GET",
+    url: `${data.ConUrl}books/absence/get${data.Search}`,
+  }),
+});

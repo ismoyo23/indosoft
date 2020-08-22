@@ -8,6 +8,7 @@ import CrudBooks from "./page/Admin/BooksCrud";
 import CrudAuthor from "./page/Admin/AuthorCrud";
 import CrudGenre from "./page/Admin/GenreCruds";
 import DetailBooks from "./page/User/DetailBooks";
+import CrudUser from "./page/Admin/UsersCrud";
 function App() {
   return (
     <div style={{ margin: "0", padding: "0" }}>
@@ -23,9 +24,11 @@ function App() {
           <Route path="/page/:page" component={Users} />
           {/* Route Admin */}
           <Route path="/admin" component={Admin} />
+          <Route path="/filterAbsence/:name" component={Admin} />
           <Route path="/books" component={CrudBooks} />
           <Route path="/author" component={CrudAuthor} />
           <Route path="/genre" component={CrudGenre} />
+          <Route path="/user" component={CrudUser} />
         </Switch>
       </Router>
     </div>
