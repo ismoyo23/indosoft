@@ -46,7 +46,7 @@ function Home(props) {
   let [idUser, setIdUser] = useState("");
   let [idBooks, setIdBooks] = useState("");
   let getBorrowed = () => {
-    props.borrowGet(process.env.REACT_API_URL).catch((error) => {
+    props.borrowGet(process.env.REACT_APP_URL).catch((error) => {
       console.log(error);
     });
   };
