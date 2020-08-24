@@ -1,17 +1,17 @@
-import axios from 'axios';
+import axios from "axios";
 
 export let borrowGet = (data) => ({
-    type: 'BORROW_GET',
-    payload: axios({
-        method: 'GET',
-        url: `http://localhost:3000/books/borrower`
-    })
-})
+  type: "BORROW_GET",
+  payload: axios({
+    method: "GET",
+    url: `${data}books/borrower`,
+  }),
+});
 
-export let borrowAction = (data) =>({
-    type: 'BORROW_ACTION',
-    payload: axios({
-        method: 'DELETE',
-        url: `${data.ConUrl}books/borrower/${data.id}`
-    })
-})
+export let borrowAction = (data) => ({
+  type: "BORROW_ACTION",
+  payload: axios({
+    method: "DELETE",
+    url: `${data.ConUrl}books/borrower/${data.id}`,
+  }),
+});
