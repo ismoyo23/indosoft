@@ -37,7 +37,8 @@
 REACT_APP_URL=http://localhost:3000/
 
 # Feature
- 1. Login register with role admin and user
+ 1. Login with QR scanner
+ 2. Import Excel
  2. Stock reductions when borrowing books
  3. Responsive
  4. Search, sort and pagination
