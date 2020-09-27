@@ -60,32 +60,10 @@ REACT_APP_URL=http://localhost:3000/
    3.Borrow Books
    ![Screenshot from 2020-07-13 16-13-15](https://user-images.githubusercontent.com/63132957/87287057-d7024980-c523-11ea-99f8-789c8e9acdc5.png)
    
-   4. Mobile Version
-   
-   ![Screenshot from 2020-07-13 16-16-11](https://user-images.githubusercontent.com/63132957/87287365-382a1d00-c524-11ea-9e86-48c488c46d70.png)
-   
-   5. Admin page
-   
-   ![Screenshot from 2020-07-13 16-20-33](https://user-images.githubusercontent.com/63132957/87287886-d4ecba80-c524-11ea-8963-c57b77489310.png)
-    
-   6. Crud Books
-   
-   -Firts page
-   ![Screenshot from 2020-07-13 16-22-21](https://user-images.githubusercontent.com/63132957/87288157-2dbc5300-c525-11ea-94d7-5fe434afe78a.png)
-   
-   -Add data
-   ![Screenshot from 2020-07-13 16-22-15](https://user-images.githubusercontent.com/63132957/87288273-56dce380-c525-11ea-9a4d-1220103b8e3a.png)
-   
-   -Update Data
-    ![Screenshot from 2020-07-13 16-22-33](https://user-images.githubusercontent.com/63132957/87288455-8f7cbd00-c525-11ea-8162-1da34429aab2.png)
-    
-   -Delete Data
-    ![Screenshot from 2020-07-13 16-22-41](https://user-images.githubusercontent.com/63132957/87288521-a7544100-c525-11ea-8b0c-356c1a0e9025.png)
-    
-   7. Crud Author
-   ![Screenshot from 2020-07-13 16-29-41](https://user-images.githubusercontent.com/63132957/87288852-19c52100-c526-11ea-874d-0ef7ae6fe323.png)
-   
-   8. Crud genre
-   ![Screenshot from 2020-07-13 16-29-45](https://user-images.githubusercontent.com/63132957/87288945-37928600-c526-11ea-8e37-c94f374677a5.png)
+  5. Admin
+  
+  ![detail](https://user-images.githubusercontent.com/63132957/94367653-4d1d5200-010a-11eb-8e20-595f53168360.png)
+![borrow](https://user-images.githubusercontent.com/63132957/94367657-54dcf680-010a-11eb-8035-aa9c1bfb9d5d.png)
+![admin](https://user-images.githubusercontent.com/63132957/94367663-60c8b880-010a-11eb-82c3-f8c2b0781971.png)
    
     
