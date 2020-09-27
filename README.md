@@ -58,11 +58,11 @@ REACT_APP_URL=http://localhost:3000/
    
    
    3.Borrow Books
-   ![Screenshot from 2020-07-13 16-13-15](https://user-images.githubusercontent.com/63132957/87287057-d7024980-c523-11ea-99f8-789c8e9acdc5.png)
+   ![detail](https://user-images.githubusercontent.com/63132957/94367653-4d1d5200-010a-11eb-8e20-595f53168360.png)
    
   5. Admin
   
-  ![detail](https://user-images.githubusercontent.com/63132957/94367653-4d1d5200-010a-11eb-8e20-595f53168360.png)
+ 
 ![borrow](https://user-images.githubusercontent.com/63132957/94367657-54dcf680-010a-11eb-8035-aa9c1bfb9d5d.png)
 ![admin](https://user-images.githubusercontent.com/63132957/94367663-60c8b880-010a-11eb-82c3-f8c2b0781971.png)
    
